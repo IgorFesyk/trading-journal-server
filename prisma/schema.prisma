@@ -1,0 +1,141 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum AccountType {
+    REAL
+    DEMO
+}
+
+enum TradeResult {
+    WIN
+    LOSE
+    IN_PROGRESS
+    BE
+}
+
+enum Direction {
+    LONG
+    SHORT
+}
+
+enum Timeframe {
+    M1
+    M5
+    M15
+    H1
+    H4
+    D1
+    W1
+}
+
+enum TradeStyle {
+    INTRA_DAY
+    SWING
+}
+
+enum Category {
+    FOREX
+    CRYPTO
+    STOCKS
+    INDICES
+}
+
+enum Currency {
+    USD
+    EUR
+}
+
+model User {
+    id              Int         @id @default(autoincrement())
+
+    name            String
+    email           String      @unique
+    password        String
+
+    accounts        Account[]
+    token           Token?
+
+    createdAt       DateTime    @default(now())
+}
+
+model Account {
+    id              Int         @id @default(autoincrement())
+
+    user            User        @relation(fields: [userId], references: [id])
+    userId          Int         
+
+    name            String
+    type            AccountType
+
+    startingEquity  Decimal
+    targetEquity    Decimal
+
+    currency        Currency
+    trades          Trade[]
+    
+    createdAt       DateTime    @default(now())
+}
+
+model Trade {
+    id              Int         @id @default(autoincrement())
+
+    account         Account     @relation(fields: [accountId], references: [id], onDelete: Cascade)
+    accountId       Int
+
+    pair            Pair        @relation(fields: [pairId], references: [id])
+    pairId          Int
+
+    entryPrice      Decimal
+    exitPrice       Decimal
+
+    stopLoss        Decimal
+    takeProfit      Decimal
+
+    pnl             Decimal
+    riskPercent     Decimal
+    rr              Decimal
+    lotSize         Decimal
+    result          TradeResult
+    direction       Direction
+    entryTF         Timeframe
+    tradeStyle      TradeStyle
+    notes           String?
+
+    images          TradeImage[]
+
+    createdAt       DateTime    @default(now())
+    openedAt        DateTime
+    closedAt        DateTime?
+}
+
+model TradeImage {
+    id              Int         @id @default(autoincrement())
+
+    trade           Trade       @relation(fields: [tradeId], references: [id], onDelete: Cascade)
+    tradeId         Int
+
+    url             String
+    label           String?
+
+    createdAt       DateTime    @default(now())
+}
+
+model Token {
+    userId          Int         @unique
+    user            User        @relation(fields: [userId], references: [id])
+    refreshToken    String      @unique
+}
+
+model Pair {
+    id              Int         @id @default(autoincrement())
+    name            String      @unique
+
+    category        Category
+    trades          Trade[]
+}
