@@ -1,11 +1,19 @@
 import { NextFunction, Request, Response } from 'express';
+import { validationResult } from 'express-validator';
+
 import { authService } from '../services/auth.service';
+import { ApiError } from '../api-error';
 
 const REFRESH_TOKEN_MAX_AGE = 24 * 60 * 60 * 1000; // 1 day
 
 export const authController = {
     async signup(req: Request, res: Response, next: NextFunction) {
         try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return next(ApiError.BadRequest('Validation errors', errors.array()));
+            }
+
             const { name, email, password } = req.body;
             const data = await authService.signup(name, email, password);
 

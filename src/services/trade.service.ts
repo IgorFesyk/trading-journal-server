@@ -1,7 +1,7 @@
 import { Direction, Timeframe, TradeResult, TradeStyle } from '../generated/prisma/enums';
 import { prisma } from '../lib/prisma';
 
-interface CreateTradeData {
+type CreateTradeData = {
     pairId: number;
     entryPrice: number;
     exitPrice: number;
@@ -18,9 +18,9 @@ interface CreateTradeData {
     notes?: string;
     openedAt: Date;
     closedAt?: Date;
-}
+};
 
-interface UpdateTradeData extends Partial<CreateTradeData> {}
+type UpdateTradeData = Partial<CreateTradeData>;
 
 export const tradeService = {
     create(accountId: number, data: CreateTradeData) {

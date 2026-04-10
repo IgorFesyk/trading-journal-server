@@ -4,6 +4,8 @@ import { ApiError } from '../api-error';
 import { prisma } from '../lib/prisma';
 import { tokenService } from './token.service';
 
+// TODO: Add OAuth
+
 export const authService = {
     async signup(name: string, email: string, password: string) {
         const existing = await prisma.user.findUnique({ where: { email } });
@@ -38,7 +40,7 @@ export const authService = {
     },
 
     async logout(refreshToken: string) {
-        // Black list for tokens
+        // TODO: Black list for tokens
         return tokenService.removeToken(refreshToken);
     },
 
