@@ -1,0 +1,13 @@
+enum CATEGORY {
+    FOREX
+    CRYPTO
+    STOCKS
+    INDICES
+}
+
+model Symbol {
+    id       Int      @id @default(autoincrement())
+    name     String   @unique
+    category CATEGORY
+    trades   Trade[]
+}

@@ -51,12 +51,12 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  User: 'User',
   Account: 'Account',
-  Trade: 'Trade',
-  TradeImage: 'TradeImage',
+  Symbol: 'Symbol',
   Token: 'Token',
-  Pair: 'Pair'
+  Trade: 'Trade',
+  Transaction: 'Transaction',
+  User: 'User'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -75,65 +75,28 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-export const UserScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  email: 'email',
-  password: 'password',
-  createdAt: 'createdAt'
-} as const
-
-export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
-
-
 export const AccountScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   name: 'name',
   type: 'type',
+  currency: 'currency',
   startingEquity: 'startingEquity',
   targetEquity: 'targetEquity',
-  currency: 'currency',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum]
 
 
-export const TradeScalarFieldEnum = {
+export const SymbolScalarFieldEnum = {
   id: 'id',
-  accountId: 'accountId',
-  pairId: 'pairId',
-  entryPrice: 'entryPrice',
-  exitPrice: 'exitPrice',
-  stopLoss: 'stopLoss',
-  takeProfit: 'takeProfit',
-  pnl: 'pnl',
-  riskPercent: 'riskPercent',
-  rr: 'rr',
-  lotSize: 'lotSize',
-  result: 'result',
-  direction: 'direction',
-  entryTF: 'entryTF',
-  tradeStyle: 'tradeStyle',
-  notes: 'notes',
-  createdAt: 'createdAt',
-  openedAt: 'openedAt',
-  closedAt: 'closedAt'
+  name: 'name',
+  category: 'category'
 } as const
 
-export type TradeScalarFieldEnum = (typeof TradeScalarFieldEnum)[keyof typeof TradeScalarFieldEnum]
-
-
-export const TradeImageScalarFieldEnum = {
-  id: 'id',
-  tradeId: 'tradeId',
-  url: 'url',
-  label: 'label',
-  createdAt: 'createdAt'
-} as const
-
-export type TradeImageScalarFieldEnum = (typeof TradeImageScalarFieldEnum)[keyof typeof TradeImageScalarFieldEnum]
+export type SymbolScalarFieldEnum = (typeof SymbolScalarFieldEnum)[keyof typeof SymbolScalarFieldEnum]
 
 
 export const TokenScalarFieldEnum = {
@@ -144,13 +107,52 @@ export const TokenScalarFieldEnum = {
 export type TokenScalarFieldEnum = (typeof TokenScalarFieldEnum)[keyof typeof TokenScalarFieldEnum]
 
 
-export const PairScalarFieldEnum = {
+export const TradeScalarFieldEnum = {
   id: 'id',
-  name: 'name',
-  category: 'category'
+  accountId: 'accountId',
+  symbolId: 'symbolId',
+  pnl: 'pnl',
+  risk: 'risk',
+  commission: 'commission',
+  status: 'status',
+  direction: 'direction',
+  entryTF: 'entryTF',
+  setup: 'setup',
+  notes: 'notes',
+  openedAt: 'openedAt',
+  closedAt: 'closedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
-export type PairScalarFieldEnum = (typeof PairScalarFieldEnum)[keyof typeof PairScalarFieldEnum]
+export type TradeScalarFieldEnum = (typeof TradeScalarFieldEnum)[keyof typeof TradeScalarFieldEnum]
+
+
+export const TransactionScalarFieldEnum = {
+  id: 'id',
+  accountId: 'accountId',
+  type: 'type',
+  amount: 'amount',
+  note: 'note',
+  occurredAt: 'occurredAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
+
+
+export const UserScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  password: 'password',
+  role: 'role',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
 export const SortOrder = {

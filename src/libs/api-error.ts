@@ -8,11 +8,19 @@ export class ApiError extends Error {
         this.errors = errors;
     }
 
+    static BadRequest(message: string, errors: unknown[] = []) {
+        return new ApiError(400, message, errors);
+    }
+
     static UnauthorizedError() {
         return new ApiError(401, 'User is not authorized');
     }
 
-    static BadRequest(message: string, errors: unknown[] = []) {
-        return new ApiError(400, message, errors);
+    static ForbiddenError() {
+        return new ApiError(403, 'Forbidden access');
+    }
+
+    static NotFound(message: string) {
+        return new ApiError(404, message);
     }
 }

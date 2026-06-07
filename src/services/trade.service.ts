@@ -1,59 +1,58 @@
-import { Direction, Timeframe, TradeResult, TradeStyle } from '../generated/prisma/enums';
-import { prisma } from '../lib/prisma';
+import { DIRECTION, EXECUTION_SETUP, TIMEFRAME, TRADE_STATUS } from '../generated/prisma/enums';
+import { prisma } from '../infra/prisma';
+import { ApiError } from '../libs/api-error';
 
-type CreateTradeData = {
-    pairId: number;
-    entryPrice: number;
-    exitPrice: number;
-    stopLoss: number;
-    takeProfit: number;
-    pnl: number;
-    riskPercent: number;
-    rr: number;
-    lotSize: number;
-    result: TradeResult;
-    direction: Direction;
-    entryTF: Timeframe;
-    tradeStyle: TradeStyle;
-    notes?: string;
+type CreateTradeInput = {
+    accountId: number;
+    symbolId: number;
+    risk: number;
+    direction: DIRECTION;
+    entryTF: TIMEFRAME;
+    setup: EXECUTION_SETUP;
     openedAt: Date;
+    status: TRADE_STATUS;
+    pnl?: number;
+    commission: number;
+    notes?: string;
     closedAt?: Date;
 };
 
-type UpdateTradeData = Partial<CreateTradeData>;
+type UpdateTradeInput = Partial<Omit<CreateTradeInput, 'accountId'>>;
 
 export const tradeService = {
-    create(accountId: number, data: CreateTradeData) {
-        return prisma.trade.create({
-            data: { accountId, ...data },
-        });
+    async create(data: CreateTradeInput, userId: number) {
+        const account = await prisma.account.findFirst({ where: { id: data.accountId, userId } });
+        if (!account) throw ApiError.NotFound('Account not found');
+        return prisma.trade.create({ data });
     },
 
-    findById(id: number) {
-        return prisma.trade.findUnique({
-            where: { id },
-            include: { pair: true, images: true },
-        });
-    },
-
-    findByAccountId(accountId: number) {
+    findByAccount(accountId: number, userId: number, filters?: { status?: TRADE_STATUS; direction?: DIRECTION }) {
         return prisma.trade.findMany({
-            where: { accountId },
-            include: { pair: true },
+            where: {
+                accountId,
+                account: { userId },
+                ...filters,
+            },
             orderBy: { openedAt: 'desc' },
         });
     },
 
-    update(id: number, data: UpdateTradeData) {
-        return prisma.trade.update({
-            where: { id },
+    findById(id: number, accountId: number, userId: number) {
+        return prisma.trade.findFirst({
+            where: { id, accountId, account: { userId } },
+        });
+    },
+
+    update(id: number, accountId: number, userId: number, data: UpdateTradeInput) {
+        return prisma.trade.updateMany({
+            where: { id, accountId, account: { userId } },
             data,
         });
     },
 
-    delete(id: number) {
-        return prisma.trade.delete({
-            where: { id },
+    delete(id: number, accountId: number, userId: number) {
+        return prisma.trade.deleteMany({
+            where: { id, accountId, account: { userId } },
         });
     },
 };

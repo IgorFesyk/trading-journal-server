@@ -18,32 +18,32 @@ export { Prisma }
 export * as $Enums from './enums'
 export * from './enums';
 /**
- * Model User
- * 
- */
-export type User = Prisma.UserModel
-/**
  * Model Account
  * 
  */
 export type Account = Prisma.AccountModel
 /**
- * Model Trade
+ * Model Symbol
  * 
  */
-export type Trade = Prisma.TradeModel
-/**
- * Model TradeImage
- * 
- */
-export type TradeImage = Prisma.TradeImageModel
+export type Symbol = Prisma.SymbolModel
 /**
  * Model Token
  * 
  */
 export type Token = Prisma.TokenModel
 /**
- * Model Pair
+ * Model Trade
  * 
  */
-export type Pair = Prisma.PairModel
+export type Trade = Prisma.TradeModel
+/**
+ * Model Transaction
+ * 
+ */
+export type Transaction = Prisma.TransactionModel
+/**
+ * Model User
+ * 
+ */
+export type User = Prisma.UserModel

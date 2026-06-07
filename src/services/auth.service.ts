@@ -1,50 +1,74 @@
 import bcrypt from 'bcrypt';
 
-import { ApiError } from '../api-error';
-import { prisma } from '../lib/prisma';
+import { ApiError } from '../libs/api-error';
+import { prisma } from '../infra/prisma';
 import { tokenService } from './token.service';
 
-// TODO: Add OAuth
+type User = {
+    id: number;
+    email: string;
+    name: string;
+};
+
+type Tokens = {
+    accessToken: string;
+    refreshToken: string;
+};
+
+type AuthResult = {
+    tokens: Tokens;
+    user: User;
+};
 
 export const authService = {
-    async signup(name: string, email: string, password: string) {
+    async signup(name: string, email: string, password: string): Promise<AuthResult> {
         const existing = await prisma.user.findUnique({ where: { email } });
         if (existing) {
-            throw ApiError.BadRequest('User with this email already exists');
+            throw ApiError.BadRequest('Sign up failed');
         }
 
         const passwordHash = await bcrypt.hash(password, 12);
         const user = await prisma.user.create({ data: { name, email, password: passwordHash } });
 
-        const tokens = tokenService.generateTokens({ id: user.id, email: user.email });
+        const tokens = tokenService.generateTokens({
+            id: user.id,
+            role: user.role,
+            email: user.email,
+            name: user.name,
+        });
         await tokenService.saveToken(user.id, tokens.refreshToken);
 
-        return { tokens, user: { id: user.id, name: user.name, email: user.email } };
+        return { tokens, user: { id: user.id, email: user.email, name: user.name } };
     },
 
-    async signin(email: string, password: string) {
+    async signin(email: string, password: string): Promise<AuthResult> {
         const user = await prisma.user.findUnique({ where: { email } });
         if (!user) {
-            throw ApiError.BadRequest('User with this email does not exist');
+            throw ApiError.BadRequest('Invalid credentials');
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            throw ApiError.BadRequest('Incorrect password');
+            throw ApiError.BadRequest('Invalid credentials');
         }
 
-        const tokens = tokenService.generateTokens({ id: user.id, email: user.email });
+        const tokens = tokenService.generateTokens({
+            id: user.id,
+            role: user.role,
+            email: user.email,
+            name: user.name,
+        });
         await tokenService.saveToken(user.id, tokens.refreshToken);
 
         return { tokens, user: { id: user.id, name: user.name, email: user.email } };
     },
 
     async logout(refreshToken: string) {
-        // TODO: Black list for tokens
+        // TODO: Add Redis blacklist for tokens
         return tokenService.removeToken(refreshToken);
     },
 
-    async refresh(refreshToken: string) {
+    async refresh(refreshToken: string): Promise<AuthResult> {
         if (!refreshToken) {
             throw ApiError.UnauthorizedError();
         }
@@ -61,13 +85,17 @@ export const authService = {
 
         const user = await prisma.user.findUnique({
             where: { id: userData.id },
-            select: { id: true, name: true, email: true },
         });
         if (!user) throw ApiError.UnauthorizedError();
 
-        const tokens = tokenService.generateTokens({ id: user.id, email: user.email });
+        const tokens = tokenService.generateTokens({
+            id: user.id,
+            role: user.role,
+            email: user.email,
+            name: user.name,
+        });
         await tokenService.saveToken(user.id, tokens.refreshToken);
 
-        return { tokens, user };
+        return { tokens, user: { id: user.id, name: user.name, email: user.email } };
     },
 };

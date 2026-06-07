@@ -1,0 +1,5 @@
+model Token {
+    userId       Int    @id
+    user         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    refreshToken String @unique
+}

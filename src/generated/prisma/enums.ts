@@ -9,35 +9,52 @@
 * 🟢 You can import this file directly.
 */
 
-export const AccountType = {
-  REAL: 'REAL',
-  DEMO: 'DEMO'
+export const ACCOUNT_TYPE = {
+  CAPITAL: 'CAPITAL',
+  PROP: 'PROP'
 } as const
 
-export type AccountType = (typeof AccountType)[keyof typeof AccountType]
+export type ACCOUNT_TYPE = (typeof ACCOUNT_TYPE)[keyof typeof ACCOUNT_TYPE]
 
 
-export const TradeResult = {
+export const CURRENCY = {
+  USD: 'USD',
+  EUR: 'EUR',
+  GBP: 'GBP'
+} as const
+
+export type CURRENCY = (typeof CURRENCY)[keyof typeof CURRENCY]
+
+
+export const CATEGORY = {
+  FOREX: 'FOREX',
+  CRYPTO: 'CRYPTO',
+  STOCKS: 'STOCKS',
+  INDICES: 'INDICES'
+} as const
+
+export type CATEGORY = (typeof CATEGORY)[keyof typeof CATEGORY]
+
+
+export const TRADE_STATUS = {
   WIN: 'WIN',
   LOSE: 'LOSE',
-  IN_PROGRESS: 'IN_PROGRESS',
-  BE: 'BE'
+  BE: 'BE',
+  IN_PROGRESS: 'IN_PROGRESS'
 } as const
 
-export type TradeResult = (typeof TradeResult)[keyof typeof TradeResult]
+export type TRADE_STATUS = (typeof TRADE_STATUS)[keyof typeof TRADE_STATUS]
 
 
-export const Direction = {
+export const DIRECTION = {
   LONG: 'LONG',
   SHORT: 'SHORT'
 } as const
 
-export type Direction = (typeof Direction)[keyof typeof Direction]
+export type DIRECTION = (typeof DIRECTION)[keyof typeof DIRECTION]
 
 
-export const Timeframe = {
-  M1: 'M1',
-  M5: 'M5',
+export const TIMEFRAME = {
   M15: 'M15',
   H1: 'H1',
   H4: 'H4',
@@ -45,30 +62,31 @@ export const Timeframe = {
   W1: 'W1'
 } as const
 
-export type Timeframe = (typeof Timeframe)[keyof typeof Timeframe]
+export type TIMEFRAME = (typeof TIMEFRAME)[keyof typeof TIMEFRAME]
 
 
-export const TradeStyle = {
-  INTRA_DAY: 'INTRA_DAY',
-  SWING: 'SWING'
+export const EXECUTION_SETUP = {
+  IDM: 'IDM',
+  SNR: 'SNR',
+  FVG: 'FVG',
+  MarketEntry: 'MarketEntry'
 } as const
 
-export type TradeStyle = (typeof TradeStyle)[keyof typeof TradeStyle]
+export type EXECUTION_SETUP = (typeof EXECUTION_SETUP)[keyof typeof EXECUTION_SETUP]
 
 
-export const Category = {
-  FOREX: 'FOREX',
-  CRYPTO: 'CRYPTO',
-  STOCKS: 'STOCKS',
-  INDICES: 'INDICES'
+export const TRANSACTION_TYPE = {
+  DEPOSIT: 'DEPOSIT',
+  WITHDRAWAL: 'WITHDRAWAL',
+  ADJUSTMENT: 'ADJUSTMENT'
 } as const
 
-export type Category = (typeof Category)[keyof typeof Category]
+export type TRANSACTION_TYPE = (typeof TRANSACTION_TYPE)[keyof typeof TRANSACTION_TYPE]
 
 
-export const Currency = {
-  USD: 'USD',
-  EUR: 'EUR'
+export const ROLE = {
+  ADMIN: 'ADMIN',
+  USER: 'USER'
 } as const
 
-export type Currency = (typeof Currency)[keyof typeof Currency]
+export type ROLE = (typeof ROLE)[keyof typeof ROLE]

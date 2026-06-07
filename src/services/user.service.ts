@@ -1,27 +1,37 @@
-import { prisma } from '../lib/prisma';
+import { ACCOUNT_TYPE, CURRENCY } from '../generated/prisma/enums';
+import { prisma } from '../infra/prisma';
+
+type AccountSummary = {
+    id: number;
+    name: string;
+    type: ACCOUNT_TYPE;
+    currency: CURRENCY;
+};
+
+type UserWithAccounts = {
+    id: number;
+    name: string;
+    email: string;
+    accounts: AccountSummary[];
+};
 
 export const userService = {
-    create(name: string, email: string, password: string) {
-        return prisma.user.create({
-            data: { name, email, password },
-        });
-    },
-
-    findById(id: number) {
-        return prisma.user.findUnique({
+    async findById(id: number): Promise<UserWithAccounts | null> {
+        return await prisma.user.findUnique({
             where: { id },
-        });
-    },
-
-    findByEmail(email: string) {
-        return prisma.user.findUnique({
-            where: { email },
-        });
-    },
-
-    delete(id: number) {
-        return prisma.user.delete({
-            where: { id },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                accounts: {
+                    select: {
+                        id: true,
+                        name: true,
+                        type: true,
+                        currency: true,
+                    },
+                },
+            },
         });
     },
 };

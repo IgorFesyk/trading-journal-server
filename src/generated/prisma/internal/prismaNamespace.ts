@@ -384,12 +384,12 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
-  User: 'User',
   Account: 'Account',
-  Trade: 'Trade',
-  TradeImage: 'TradeImage',
+  Symbol: 'Symbol',
   Token: 'Token',
-  Pair: 'Pair'
+  Trade: 'Trade',
+  Transaction: 'Transaction',
+  User: 'User'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -405,84 +405,10 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "account" | "trade" | "tradeImage" | "token" | "pair"
+    modelProps: "account" | "symbol" | "token" | "trade" | "transaction" | "user"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
-    User: {
-      payload: Prisma.$UserPayload<ExtArgs>
-      fields: Prisma.UserFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.UserFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.UserFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
-        }
-        findFirst: {
-          args: Prisma.UserFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.UserFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
-        }
-        findMany: {
-          args: Prisma.UserFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>[]
-        }
-        create: {
-          args: Prisma.UserCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
-        }
-        createMany: {
-          args: Prisma.UserCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.UserCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>[]
-        }
-        delete: {
-          args: Prisma.UserDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
-        }
-        update: {
-          args: Prisma.UserUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
-        }
-        deleteMany: {
-          args: Prisma.UserDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.UserUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.UserUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>[]
-        }
-        upsert: {
-          args: Prisma.UserUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
-        }
-        aggregate: {
-          args: Prisma.UserAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateUser>
-        }
-        groupBy: {
-          args: Prisma.UserGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.UserGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.UserCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.UserCountAggregateOutputType> | number
-        }
-      }
-    }
     Account: {
       payload: Prisma.$AccountPayload<ExtArgs>
       fields: Prisma.AccountFieldRefs
@@ -557,151 +483,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    Trade: {
-      payload: Prisma.$TradePayload<ExtArgs>
-      fields: Prisma.TradeFieldRefs
+    Symbol: {
+      payload: Prisma.$SymbolPayload<ExtArgs>
+      fields: Prisma.SymbolFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.TradeFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradePayload> | null
+          args: Prisma.SymbolFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SymbolPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.TradeFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradePayload>
+          args: Prisma.SymbolFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SymbolPayload>
         }
         findFirst: {
-          args: Prisma.TradeFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradePayload> | null
+          args: Prisma.SymbolFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SymbolPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.TradeFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradePayload>
+          args: Prisma.SymbolFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SymbolPayload>
         }
         findMany: {
-          args: Prisma.TradeFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradePayload>[]
+          args: Prisma.SymbolFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SymbolPayload>[]
         }
         create: {
-          args: Prisma.TradeCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradePayload>
+          args: Prisma.SymbolCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SymbolPayload>
         }
         createMany: {
-          args: Prisma.TradeCreateManyArgs<ExtArgs>
+          args: Prisma.SymbolCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.TradeCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradePayload>[]
+          args: Prisma.SymbolCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SymbolPayload>[]
         }
         delete: {
-          args: Prisma.TradeDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradePayload>
+          args: Prisma.SymbolDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SymbolPayload>
         }
         update: {
-          args: Prisma.TradeUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradePayload>
+          args: Prisma.SymbolUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SymbolPayload>
         }
         deleteMany: {
-          args: Prisma.TradeDeleteManyArgs<ExtArgs>
+          args: Prisma.SymbolDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.TradeUpdateManyArgs<ExtArgs>
+          args: Prisma.SymbolUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.TradeUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradePayload>[]
+          args: Prisma.SymbolUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SymbolPayload>[]
         }
         upsert: {
-          args: Prisma.TradeUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradePayload>
+          args: Prisma.SymbolUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SymbolPayload>
         }
         aggregate: {
-          args: Prisma.TradeAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateTrade>
+          args: Prisma.SymbolAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSymbol>
         }
         groupBy: {
-          args: Prisma.TradeGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.TradeGroupByOutputType>[]
+          args: Prisma.SymbolGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SymbolGroupByOutputType>[]
         }
         count: {
-          args: Prisma.TradeCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.TradeCountAggregateOutputType> | number
-        }
-      }
-    }
-    TradeImage: {
-      payload: Prisma.$TradeImagePayload<ExtArgs>
-      fields: Prisma.TradeImageFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.TradeImageFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradeImagePayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.TradeImageFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradeImagePayload>
-        }
-        findFirst: {
-          args: Prisma.TradeImageFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradeImagePayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.TradeImageFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradeImagePayload>
-        }
-        findMany: {
-          args: Prisma.TradeImageFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradeImagePayload>[]
-        }
-        create: {
-          args: Prisma.TradeImageCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradeImagePayload>
-        }
-        createMany: {
-          args: Prisma.TradeImageCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.TradeImageCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradeImagePayload>[]
-        }
-        delete: {
-          args: Prisma.TradeImageDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradeImagePayload>
-        }
-        update: {
-          args: Prisma.TradeImageUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradeImagePayload>
-        }
-        deleteMany: {
-          args: Prisma.TradeImageDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.TradeImageUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.TradeImageUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradeImagePayload>[]
-        }
-        upsert: {
-          args: Prisma.TradeImageUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradeImagePayload>
-        }
-        aggregate: {
-          args: Prisma.TradeImageAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateTradeImage>
-        }
-        groupBy: {
-          args: Prisma.TradeImageGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.TradeImageGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.TradeImageCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.TradeImageCountAggregateOutputType> | number
+          args: Prisma.SymbolCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SymbolCountAggregateOutputType> | number
         }
       }
     }
@@ -779,77 +631,225 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    Pair: {
-      payload: Prisma.$PairPayload<ExtArgs>
-      fields: Prisma.PairFieldRefs
+    Trade: {
+      payload: Prisma.$TradePayload<ExtArgs>
+      fields: Prisma.TradeFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.PairFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PairPayload> | null
+          args: Prisma.TradeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradePayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.PairFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PairPayload>
+          args: Prisma.TradeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradePayload>
         }
         findFirst: {
-          args: Prisma.PairFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PairPayload> | null
+          args: Prisma.TradeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradePayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.PairFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PairPayload>
+          args: Prisma.TradeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradePayload>
         }
         findMany: {
-          args: Prisma.PairFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PairPayload>[]
+          args: Prisma.TradeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradePayload>[]
         }
         create: {
-          args: Prisma.PairCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PairPayload>
+          args: Prisma.TradeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradePayload>
         }
         createMany: {
-          args: Prisma.PairCreateManyArgs<ExtArgs>
+          args: Prisma.TradeCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.PairCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PairPayload>[]
+          args: Prisma.TradeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradePayload>[]
         }
         delete: {
-          args: Prisma.PairDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PairPayload>
+          args: Prisma.TradeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradePayload>
         }
         update: {
-          args: Prisma.PairUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PairPayload>
+          args: Prisma.TradeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradePayload>
         }
         deleteMany: {
-          args: Prisma.PairDeleteManyArgs<ExtArgs>
+          args: Prisma.TradeDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.PairUpdateManyArgs<ExtArgs>
+          args: Prisma.TradeUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.PairUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PairPayload>[]
+          args: Prisma.TradeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradePayload>[]
         }
         upsert: {
-          args: Prisma.PairUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PairPayload>
+          args: Prisma.TradeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TradePayload>
         }
         aggregate: {
-          args: Prisma.PairAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregatePair>
+          args: Prisma.TradeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTrade>
         }
         groupBy: {
-          args: Prisma.PairGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.PairGroupByOutputType>[]
+          args: Prisma.TradeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TradeGroupByOutputType>[]
         }
         count: {
-          args: Prisma.PairCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.PairCountAggregateOutputType> | number
+          args: Prisma.TradeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TradeCountAggregateOutputType> | number
+        }
+      }
+    }
+    Transaction: {
+      payload: Prisma.$TransactionPayload<ExtArgs>
+      fields: Prisma.TransactionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TransactionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TransactionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload>
+        }
+        findFirst: {
+          args: Prisma.TransactionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TransactionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload>
+        }
+        findMany: {
+          args: Prisma.TransactionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload>[]
+        }
+        create: {
+          args: Prisma.TransactionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload>
+        }
+        createMany: {
+          args: Prisma.TransactionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TransactionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload>[]
+        }
+        delete: {
+          args: Prisma.TransactionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload>
+        }
+        update: {
+          args: Prisma.TransactionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload>
+        }
+        deleteMany: {
+          args: Prisma.TransactionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TransactionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TransactionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload>[]
+        }
+        upsert: {
+          args: Prisma.TransactionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload>
+        }
+        aggregate: {
+          args: Prisma.TransactionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTransaction>
+        }
+        groupBy: {
+          args: Prisma.TransactionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TransactionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TransactionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TransactionCountAggregateOutputType> | number
+        }
+      }
+    }
+    User: {
+      payload: Prisma.$UserPayload<ExtArgs>
+      fields: Prisma.UserFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
+        }
+        findFirst: {
+          args: Prisma.UserFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
+        }
+        findMany: {
+          args: Prisma.UserFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>[]
+        }
+        create: {
+          args: Prisma.UserCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
+        }
+        createMany: {
+          args: Prisma.UserCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>[]
+        }
+        delete: {
+          args: Prisma.UserDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
+        }
+        update: {
+          args: Prisma.UserUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
+        }
+        deleteMany: {
+          args: Prisma.UserDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>[]
+        }
+        upsert: {
+          args: Prisma.UserUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
+        }
+        aggregate: {
+          args: Prisma.UserAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUser>
+        }
+        groupBy: {
+          args: Prisma.UserGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserCountAggregateOutputType> | number
         }
       }
     }
@@ -892,65 +892,28 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-export const UserScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  email: 'email',
-  password: 'password',
-  createdAt: 'createdAt'
-} as const
-
-export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
-
-
 export const AccountScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   name: 'name',
   type: 'type',
+  currency: 'currency',
   startingEquity: 'startingEquity',
   targetEquity: 'targetEquity',
-  currency: 'currency',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum]
 
 
-export const TradeScalarFieldEnum = {
+export const SymbolScalarFieldEnum = {
   id: 'id',
-  accountId: 'accountId',
-  pairId: 'pairId',
-  entryPrice: 'entryPrice',
-  exitPrice: 'exitPrice',
-  stopLoss: 'stopLoss',
-  takeProfit: 'takeProfit',
-  pnl: 'pnl',
-  riskPercent: 'riskPercent',
-  rr: 'rr',
-  lotSize: 'lotSize',
-  result: 'result',
-  direction: 'direction',
-  entryTF: 'entryTF',
-  tradeStyle: 'tradeStyle',
-  notes: 'notes',
-  createdAt: 'createdAt',
-  openedAt: 'openedAt',
-  closedAt: 'closedAt'
+  name: 'name',
+  category: 'category'
 } as const
 
-export type TradeScalarFieldEnum = (typeof TradeScalarFieldEnum)[keyof typeof TradeScalarFieldEnum]
-
-
-export const TradeImageScalarFieldEnum = {
-  id: 'id',
-  tradeId: 'tradeId',
-  url: 'url',
-  label: 'label',
-  createdAt: 'createdAt'
-} as const
-
-export type TradeImageScalarFieldEnum = (typeof TradeImageScalarFieldEnum)[keyof typeof TradeImageScalarFieldEnum]
+export type SymbolScalarFieldEnum = (typeof SymbolScalarFieldEnum)[keyof typeof SymbolScalarFieldEnum]
 
 
 export const TokenScalarFieldEnum = {
@@ -961,13 +924,52 @@ export const TokenScalarFieldEnum = {
 export type TokenScalarFieldEnum = (typeof TokenScalarFieldEnum)[keyof typeof TokenScalarFieldEnum]
 
 
-export const PairScalarFieldEnum = {
+export const TradeScalarFieldEnum = {
   id: 'id',
-  name: 'name',
-  category: 'category'
+  accountId: 'accountId',
+  symbolId: 'symbolId',
+  pnl: 'pnl',
+  risk: 'risk',
+  commission: 'commission',
+  status: 'status',
+  direction: 'direction',
+  entryTF: 'entryTF',
+  setup: 'setup',
+  notes: 'notes',
+  openedAt: 'openedAt',
+  closedAt: 'closedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
-export type PairScalarFieldEnum = (typeof PairScalarFieldEnum)[keyof typeof PairScalarFieldEnum]
+export type TradeScalarFieldEnum = (typeof TradeScalarFieldEnum)[keyof typeof TradeScalarFieldEnum]
+
+
+export const TransactionScalarFieldEnum = {
+  id: 'id',
+  accountId: 'accountId',
+  type: 'type',
+  amount: 'amount',
+  note: 'note',
+  occurredAt: 'occurredAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
+
+
+export const UserScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  password: 'password',
+  role: 'role',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1029,6 +1031,34 @@ export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 
 
 /**
+ * Reference to a field of type 'ACCOUNT_TYPE'
+ */
+export type EnumACCOUNT_TYPEFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ACCOUNT_TYPE'>
+    
+
+
+/**
+ * Reference to a field of type 'ACCOUNT_TYPE[]'
+ */
+export type ListEnumACCOUNT_TYPEFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ACCOUNT_TYPE[]'>
+    
+
+
+/**
+ * Reference to a field of type 'CURRENCY'
+ */
+export type EnumCURRENCYFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CURRENCY'>
+    
+
+
+/**
+ * Reference to a field of type 'CURRENCY[]'
+ */
+export type ListEnumCURRENCYFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CURRENCY[]'>
+    
+
+
+/**
  * Reference to a field of type 'DateTime'
  */
 export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -1043,114 +1073,100 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
- * Reference to a field of type 'AccountType'
+ * Reference to a field of type 'CATEGORY'
  */
-export type EnumAccountTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AccountType'>
+export type EnumCATEGORYFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CATEGORY'>
     
 
 
 /**
- * Reference to a field of type 'AccountType[]'
+ * Reference to a field of type 'CATEGORY[]'
  */
-export type ListEnumAccountTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AccountType[]'>
+export type ListEnumCATEGORYFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CATEGORY[]'>
     
 
 
 /**
- * Reference to a field of type 'Decimal'
+ * Reference to a field of type 'TRADE_STATUS'
  */
-export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+export type EnumTRADE_STATUSFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TRADE_STATUS'>
     
 
 
 /**
- * Reference to a field of type 'Decimal[]'
+ * Reference to a field of type 'TRADE_STATUS[]'
  */
-export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+export type ListEnumTRADE_STATUSFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TRADE_STATUS[]'>
     
 
 
 /**
- * Reference to a field of type 'Currency'
+ * Reference to a field of type 'DIRECTION'
  */
-export type EnumCurrencyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Currency'>
+export type EnumDIRECTIONFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DIRECTION'>
     
 
 
 /**
- * Reference to a field of type 'Currency[]'
+ * Reference to a field of type 'DIRECTION[]'
  */
-export type ListEnumCurrencyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Currency[]'>
+export type ListEnumDIRECTIONFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DIRECTION[]'>
     
 
 
 /**
- * Reference to a field of type 'TradeResult'
+ * Reference to a field of type 'TIMEFRAME'
  */
-export type EnumTradeResultFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TradeResult'>
+export type EnumTIMEFRAMEFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TIMEFRAME'>
     
 
 
 /**
- * Reference to a field of type 'TradeResult[]'
+ * Reference to a field of type 'TIMEFRAME[]'
  */
-export type ListEnumTradeResultFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TradeResult[]'>
+export type ListEnumTIMEFRAMEFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TIMEFRAME[]'>
     
 
 
 /**
- * Reference to a field of type 'Direction'
+ * Reference to a field of type 'EXECUTION_SETUP'
  */
-export type EnumDirectionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Direction'>
+export type EnumEXECUTION_SETUPFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EXECUTION_SETUP'>
     
 
 
 /**
- * Reference to a field of type 'Direction[]'
+ * Reference to a field of type 'EXECUTION_SETUP[]'
  */
-export type ListEnumDirectionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Direction[]'>
+export type ListEnumEXECUTION_SETUPFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EXECUTION_SETUP[]'>
     
 
 
 /**
- * Reference to a field of type 'Timeframe'
+ * Reference to a field of type 'TRANSACTION_TYPE'
  */
-export type EnumTimeframeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Timeframe'>
+export type EnumTRANSACTION_TYPEFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TRANSACTION_TYPE'>
     
 
 
 /**
- * Reference to a field of type 'Timeframe[]'
+ * Reference to a field of type 'TRANSACTION_TYPE[]'
  */
-export type ListEnumTimeframeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Timeframe[]'>
+export type ListEnumTRANSACTION_TYPEFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TRANSACTION_TYPE[]'>
     
 
 
 /**
- * Reference to a field of type 'TradeStyle'
+ * Reference to a field of type 'ROLE'
  */
-export type EnumTradeStyleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TradeStyle'>
+export type EnumROLEFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ROLE'>
     
 
 
 /**
- * Reference to a field of type 'TradeStyle[]'
+ * Reference to a field of type 'ROLE[]'
  */
-export type ListEnumTradeStyleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TradeStyle[]'>
-    
-
-
-/**
- * Reference to a field of type 'Category'
- */
-export type EnumCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Category'>
-    
-
-
-/**
- * Reference to a field of type 'Category[]'
- */
-export type ListEnumCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Category[]'>
+export type ListEnumROLEFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ROLE[]'>
     
 
 
@@ -1262,12 +1278,12 @@ export type PrismaClientOptions = ({
   comments?: runtime.SqlCommenterPlugin[]
 }
 export type GlobalOmitConfig = {
-  user?: Prisma.UserOmit
   account?: Prisma.AccountOmit
-  trade?: Prisma.TradeOmit
-  tradeImage?: Prisma.TradeImageOmit
+  symbol?: Prisma.SymbolOmit
   token?: Prisma.TokenOmit
-  pair?: Prisma.PairOmit
+  trade?: Prisma.TradeOmit
+  transaction?: Prisma.TransactionOmit
+  user?: Prisma.UserOmit
 }
 
 /* Types for Logging */

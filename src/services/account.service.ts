@@ -1,29 +1,31 @@
-import { AccountType, Currency } from '../generated/prisma/enums';
-import { prisma } from '../lib/prisma';
+import { ACCOUNT_TYPE, CURRENCY } from '../generated/prisma/enums';
+import { prisma } from '../infra/prisma';
 
-interface CreateAccountData {
+type CreateAccountInput = {
+    userId: number;
     name: string;
-    type: AccountType;
+    type: ACCOUNT_TYPE;
+    currency: CURRENCY;
     startingEquity: number;
-    targetEquity: number;
-    currency: Currency;
-}
-
-interface UpdateAccountData {
-    name?: string;
     targetEquity?: number;
-}
+};
+
+type UpdateAccountInput = {
+    name?: string;
+    type?: ACCOUNT_TYPE;
+    currency?: CURRENCY;
+    startingEquity?: number;
+    targetEquity?: number;
+};
 
 export const accountService = {
-    create(userId: number, data: CreateAccountData) {
-        return prisma.account.create({
-            data: { userId, ...data },
-        });
+    create(data: CreateAccountInput) {
+        return prisma.account.create({ data });
     },
 
-    findById(id: number) {
+    findById(id: number, userId: number) {
         return prisma.account.findUnique({
-            where: { id },
+            where: { id, userId },
         });
     },
 
@@ -33,34 +35,16 @@ export const accountService = {
         });
     },
 
-    update(id: number, data: UpdateAccountData) {
+    update(accountId: number, userId: number, data: UpdateAccountInput) {
         return prisma.account.update({
-            where: { id },
+            where: { id: accountId, userId },
             data,
         });
     },
 
-    delete(id: number) {
+    delete(accountId: number, userId: number) {
         return prisma.account.delete({
-            where: { id },
+            where: { id: accountId, userId },
         });
-    },
-
-    async getCurrentEquity(id: number) {
-        const account = await prisma.account.findUnique({
-            where: { id },
-            select: { startingEquity: true },
-        });
-
-        if (!account) return null;
-
-        const result = await prisma.trade.aggregate({
-            where: { accountId: id },
-            // TODO: check if there is floating issue
-            _sum: { pnl: true },
-        });
-
-        const totalPnl = result._sum.pnl ?? 0;
-        return Number(account.startingEquity) + Number(totalPnl);
     },
 };

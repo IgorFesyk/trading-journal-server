@@ -1,0 +1,50 @@
+enum TRADE_STATUS {
+    WIN
+    LOSE
+    BE
+    IN_PROGRESS
+}
+
+enum DIRECTION {
+    LONG
+    SHORT
+}
+
+enum TIMEFRAME {
+    M15
+    H1
+    H4
+    D1
+    W1
+}
+
+enum EXECUTION_SETUP {
+    IDM
+    SNR
+    FVG
+    MarketEntry
+}
+
+model Trade {
+    id           Int              @id @default(autoincrement())
+    account      Account          @relation(fields: [accountId], references: [id], onDelete: Cascade)
+    accountId    Int
+    symbol       Symbol           @relation(fields: [symbolId], references: [id])
+    symbolId     Int
+    pnl          Int?             // cents: $10,50 -> 1050
+    risk         Int              // pips: 1,52% -> 152
+    commission   Int?             // cents: $12,4 -> 1240
+    status       TRADE_STATUS
+    direction    DIRECTION
+    entryTF      TIMEFRAME
+    setup        EXECUTION_SETUP
+    notes        String?
+    openedAt     DateTime
+    closedAt     DateTime?
+    createdAt    DateTime         @default(now())
+    updatedAt    DateTime         @updatedAt
+
+    @@index([accountId, openedAt])
+    @@index([accountId, status])
+    @@index([symbolId])
+}

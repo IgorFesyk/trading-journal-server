@@ -6,15 +6,17 @@ Node.js REST API server for the Trading Journal application.
 
 - **Runtime:** Node.js with TypeScript
 - **Framework:** Express 5
-- **ORM:** Prisma
+- **ORM:** Prisma 7 (schema split across `prisma/schema/`, client generated to `src/generated/prisma/`)
 - **Database:** PostgreSQL (Docker)
-- **Dev server:** Nodemon + tsx
-- **Linter:** OXC (`oxlint`)
+- **Validation:** Zod 4
+- **Auth:** JWT — access token (Bearer, 15 min) + refresh token (httpOnly cookie, 7 days)
+- **Testing:** Vitest + supertest
+- **Linter:** ESLint + Prettier
 - **Package manager:** pnpm
 
 ## Prerequisites
 
-- [Node.js](https://nodejs.org/) 20+
+- [Node.js](https://nodejs.org/)
 - [pnpm](https://pnpm.io/)
 - [Docker](https://www.docker.com/)
 
@@ -34,6 +36,8 @@ Copy `.env.example` to `.env` and adjust values if needed:
 cp .env.example .env
 ```
 
+Required variables: `POSTGRES_URL`, `JWT_ACCESS_SECRET`, `JWT_REFRESH_SECRET`, `PORT`.
+
 ### 3. Start the database
 
 ```sh
@@ -52,34 +56,13 @@ pnpm db:migrate
 pnpm dev
 ```
 
-The server will be available at `http://localhost:3000`.
+The server will be available at `http://localhost:5000`.
 
-## Scripts
+## Architecture
 
-| Script | Description |
-|---|---|
-| `pnpm dev` | Start dev server with hot reload |
-| `pnpm build` | Compile TypeScript to `dist/` |
-| `pnpm start` | Run compiled server |
-| `pnpm lint` | Lint `src/` with oxlint |
-| `pnpm lint:fix` | Lint and auto-fix |
-| `pnpm db:migrate` | Run Prisma migrations |
-| `pnpm db:push` | Push schema changes without migration |
-| `pnpm db:generate` | Regenerate Prisma client |
-| `pnpm db:studio` | Open Prisma Studio |
+**Layer order:** `routes -> controllers → services → prisma`
 
-## Project Structure
-
-```
-server/
-├── prisma/
-│   └── schema.prisma     # Database schema
-├── src/
-│   └── index.ts          # Entry point
-├── .env                  # Environment variables (git-ignored)
-├── .env.example          # Environment variable template
-├── .oxlintrc.json        # OXC linter config
-├── docker-compose.yml    # PostgreSQL service
-├── nodemon.json          # Nodemon config
-└── tsconfig.json         # TypeScript config
-```
+- **Routes** (`src/routes/`) — register Express routes, define Zod validation schemas inline, apply middleware.
+- **Controllers** (`src/controllers/`) — thin HTTP layer: parse request, call service, set cookies/status, pass errors to `next(err)`.
+- **Services** (`src/services/`) — all business logic and DB access via `src/infra/prisma.ts`.
+- **Middlewares** (`src/middlewares/`) — `authMiddleware`, `validateMiddleware`, `requireAdminMiddleware`, `errorMiddleware`.

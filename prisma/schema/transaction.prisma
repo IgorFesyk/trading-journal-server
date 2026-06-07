@@ -1,0 +1,19 @@
+enum TRANSACTION_TYPE {
+    DEPOSIT
+    WITHDRAWAL
+    ADJUSTMENT
+}
+
+model Transaction {
+    id         Int             @id @default(autoincrement())
+    account    Account         @relation(fields: [accountId], references: [id], onDelete: Cascade)
+    accountId  Int
+    type       TRANSACTION_TYPE
+    amount     Int             // cents: $12,54 -> 1254
+    note       String?
+    occurredAt DateTime
+    createdAt  DateTime        @default(now())
+    updatedAt  DateTime        @default(now()) @updatedAt
+
+    @@index([accountId, occurredAt])
+}

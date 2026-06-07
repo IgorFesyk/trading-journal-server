@@ -262,11 +262,6 @@ export type TokenUncheckedUpdateManyInput = {
   refreshToken?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type TokenNullableScalarRelationFilter = {
-  is?: Prisma.TokenWhereInput | null
-  isNot?: Prisma.TokenWhereInput | null
-}
-
 export type TokenCountOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   refreshToken?: Prisma.SortOrder
@@ -288,6 +283,11 @@ export type TokenMinOrderByAggregateInput = {
 
 export type TokenSumOrderByAggregateInput = {
   userId?: Prisma.SortOrder
+}
+
+export type TokenNullableScalarRelationFilter = {
+  is?: Prisma.TokenWhereInput | null
+  isNot?: Prisma.TokenWhereInput | null
 }
 
 export type TokenCreateNestedOneWithoutUserInput = {

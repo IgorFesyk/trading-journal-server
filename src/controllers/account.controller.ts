@@ -1,12 +1,15 @@
 import { NextFunction, Request, Response } from 'express';
 
+import { ApiError } from '../libs/api-error';
 import { accountService } from '../services/account.service';
 
 export const accountController = {
     async create(req: Request, res: Response, next: NextFunction) {
         try {
-            const { userId, ...data } = req.body;
-            const account = await accountService.create(Number(userId), data);
+            const account = await accountService.create({
+                ...req.body,
+                userId: req.user.id,
+            });
 
             res.status(201).json(account);
         } catch (err) {
@@ -14,23 +17,9 @@ export const accountController = {
         }
     },
 
-    async getById(req: Request, res: Response, next: NextFunction) {
+    async getMyAccounts(req: Request, res: Response, next: NextFunction) {
         try {
-            const account = await accountService.findById(Number(req.params.id));
-            if (!account) {
-                res.status(404).json({ message: 'Account not found' });
-                return;
-            }
-
-            res.json(account);
-        } catch (err) {
-            next(err);
-        }
-    },
-
-    async getByUserId(req: Request, res: Response, next: NextFunction) {
-        try {
-            const accounts = await accountService.findByUserId(Number(req.params.userId));
+            const accounts = await accountService.findByUserId(req.user.id);
 
             res.json(accounts);
         } catch (err) {
@@ -38,9 +27,12 @@ export const accountController = {
         }
     },
 
-    async update(req: Request, res: Response, next: NextFunction) {
+    async getById(req: Request, res: Response, next: NextFunction) {
         try {
-            const account = await accountService.update(Number(req.params.id), req.body);
+            const account = await accountService.findById(Number(req.params.id), req.user.id);
+            if (!account) {
+                return next(ApiError.NotFound('Account not found'));
+            }
 
             res.json(account);
         } catch (err) {
@@ -48,25 +40,21 @@ export const accountController = {
         }
     },
 
-    async delete(req: Request, res: Response, next: NextFunction) {
+    async update(req: Request, res: Response, next: NextFunction) {
         try {
-            await accountService.delete(Number(req.params.id));
+            const updated = await accountService.update(Number(req.params.id), req.user.id, req.body);
 
-            res.status(204).send();
+            res.json(updated);
         } catch (err) {
             next(err);
         }
     },
 
-    async getCurrentEquity(req: Request, res: Response, next: NextFunction) {
+    async delete(req: Request, res: Response, next: NextFunction) {
         try {
-            const equity = await accountService.getCurrentEquity(Number(req.params.id));
-            if (equity === null) {
-                res.status(404).json({ message: 'Account not found' });
-                return;
-            }
+            await accountService.delete(Number(req.params.id), req.user.id);
 
-            res.json({ equity });
+            res.status(204).send();
         } catch (err) {
             next(err);
         }

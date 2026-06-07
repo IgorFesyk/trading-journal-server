@@ -1,0 +1,16 @@
+enum ROLE {
+    ADMIN
+    USER
+}
+
+model User {
+    id        Int       @id @default(autoincrement())
+    name      String
+    email     String    @unique
+    password  String
+    role      ROLE      @default(USER)
+    accounts  Account[]
+    token     Token?    // TODO: multiple sessions
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @default(now()) @updatedAt
+}
