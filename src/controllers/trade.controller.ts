@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { ApiError } from '../libs/api-error';
 import { DIRECTION, TRADE_STATUS } from '../generated/prisma/enums';
+import { ApiError } from '../libs/api-error';
 import { tradeService } from '../services/trade.service';
 
 export const tradeController = {

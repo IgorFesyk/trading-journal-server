@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 
-import { ApiError } from '../libs/api-error';
 import { prisma } from '../infra/prisma';
+import { ApiError } from '../libs/api-error';
 import { tokenService } from './token.service';
 
 type User = {
@@ -96,6 +96,6 @@ export const authService = {
         });
         await tokenService.saveToken(user.id, tokens.refreshToken);
 
-        return { tokens, user: { id: user.id, name: user.name, email: user.email } };
+        return { tokens, user: { id: user.id, email: user.email, name: user.name } };
     },
 };

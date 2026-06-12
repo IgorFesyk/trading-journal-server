@@ -1,9 +1,9 @@
 import jwt from 'jsonwebtoken';
 import { z } from 'zod';
 
-import { prisma } from '../infra/prisma';
 import { env } from '../env';
 import { ROLE } from '../generated/prisma/enums';
+import { prisma } from '../infra/prisma';
 
 const tokenPayloadSchema = z.object({
     id: z.number(),

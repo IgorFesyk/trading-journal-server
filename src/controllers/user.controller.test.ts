@@ -1,7 +1,8 @@
-import { userService } from '../services/user.service';
-import { tokenService } from '../services/token.service';
 import request from 'supertest';
+
 import app from '../app';
+import { tokenService } from '../services/token.service';
+import { userService } from '../services/user.service';
 
 vi.mock('../services/user.service');
 vi.mock('../services/token.service');

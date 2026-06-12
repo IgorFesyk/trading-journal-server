@@ -2,9 +2,9 @@ import { Router } from 'express';
 import z from 'zod';
 
 import { transactionController } from '../controllers/transaction.controller';
+import { TRANSACTION_TYPE } from '../generated/prisma/enums';
 import { authMiddleware } from '../middlewares/auth.middleware';
 import { validateMiddleware } from '../middlewares/validate.middleware';
-import { TRANSACTION_TYPE } from '../generated/prisma/enums';
 
 const createTransactionSchema = z.object({
     type: z.enum(TRANSACTION_TYPE),

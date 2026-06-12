@@ -1,8 +1,8 @@
 import { Router } from 'express';
+import z from 'zod';
 
 import { authController } from '../controllers/auth.controller';
 import { validateMiddleware } from '../middlewares/validate.middleware';
-import z from 'zod';
 
 const signupSchema = z.object({
     name: z.string('Name must be a string').nonempty('Name is required'),

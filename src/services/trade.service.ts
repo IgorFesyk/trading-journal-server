@@ -23,6 +23,7 @@ export const tradeService = {
     async create(data: CreateTradeInput, userId: number) {
         const account = await prisma.account.findFirst({ where: { id: data.accountId, userId } });
         if (!account) throw ApiError.NotFound('Account not found');
+
         return prisma.trade.create({ data });
     },
 
@@ -31,7 +32,8 @@ export const tradeService = {
             where: {
                 accountId,
                 account: { userId },
-                ...filters,
+                ...(filters?.status && { status: filters.status }),
+                ...(filters?.direction && { direction: filters.direction }),
             },
             orderBy: { openedAt: 'desc' },
         });

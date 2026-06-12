@@ -1,10 +1,10 @@
 import { Router } from 'express';
+import z from 'zod';
 
 import { accountController } from '../controllers/account.controller';
+import { ACCOUNT_TYPE, CURRENCY } from '../generated/prisma/enums';
 import { authMiddleware } from '../middlewares/auth.middleware';
 import { validateMiddleware } from '../middlewares/validate.middleware';
-import z from 'zod';
-import { ACCOUNT_TYPE, CURRENCY } from '../generated/prisma/enums';
 import tradeRoutes from './trade.routes';
 import transactionRoutes from './transaction.routes';
 

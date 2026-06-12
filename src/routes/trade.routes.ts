@@ -2,9 +2,9 @@ import { Router } from 'express';
 import z from 'zod';
 
 import { tradeController } from '../controllers/trade.controller';
+import { DIRECTION, EXECUTION_SETUP, TIMEFRAME, TRADE_STATUS } from '../generated/prisma/enums';
 import { authMiddleware } from '../middlewares/auth.middleware';
 import { validateMiddleware } from '../middlewares/validate.middleware';
-import { DIRECTION, EXECUTION_SETUP, TIMEFRAME, TRADE_STATUS } from '../generated/prisma/enums';
 
 const createTradeSchema = z.object({
     symbolId: z.coerce.number().int().positive(),

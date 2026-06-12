@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
+
 import { CATEGORY } from '../generated/prisma/enums';
-import { symbolService } from '../services/symbol.service';
 import { ApiError } from '../libs/api-error';
+import { symbolService } from '../services/symbol.service';
 
 export const symbolController = {
     async create(req: Request, res: Response, next: NextFunction) {

@@ -1,14 +1,14 @@
-import express, { Express } from 'express';
-import { env } from './env';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import express, { Express } from 'express';
 import rateLimit from 'express-rate-limit';
 
-import authRoutes from './routes/auth.routes';
-import userRoutes from './routes/user.routes';
-import accountRoutes from './routes/account.routes';
-import symbolRoutes from './routes/symbol.routes';
+import { env } from './env';
 import { errorMiddleware } from './middlewares/error.middleware';
+import accountRoutes from './routes/account.routes';
+import authRoutes from './routes/auth.routes';
+import symbolRoutes from './routes/symbol.routes';
+import userRoutes from './routes/user.routes';
 
 const app: Express = express();
 

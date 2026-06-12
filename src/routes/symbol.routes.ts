@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import z from 'zod';
 
-import { CATEGORY } from '../generated/prisma/enums';
 import { symbolController } from '../controllers/symbol.controller';
+import { CATEGORY } from '../generated/prisma/enums';
 import { authMiddleware } from '../middlewares/auth.middleware';
 import { requireAdminMiddleware } from '../middlewares/require-admin.middleware';
 import { validateMiddleware } from '../middlewares/validate.middleware';

@@ -1,4 +1,4 @@
-import { NextFunction, Response, Request } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import z from 'zod';
 
 export function validateMiddleware(schema: z.Schema, target: 'body' | 'query' = 'body') {
@@ -8,7 +8,11 @@ export function validateMiddleware(schema: z.Schema, target: 'body' | 'query' = 
             return next(result.error);
         }
 
-        req[target] = result.data;
+        if (target === 'query') {
+            Object.defineProperty(req, 'query', { value: result.data, writable: true, configurable: true });
+        } else {
+            req[target] = result.data;
+        }
 
         next();
     };

@@ -1,7 +1,8 @@
-import { authService } from '../services/auth.service';
 import request from 'supertest';
+
 import app from '../app';
 import { ApiError } from '../libs/api-error';
+import { authService } from '../services/auth.service';
 
 vi.mock('../services/auth.service');
 
