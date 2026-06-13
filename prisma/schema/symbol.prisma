@@ -1,8 +1,8 @@
 enum CATEGORY {
-    FOREX
-    CRYPTO
-    STOCKS
-    INDICES
+    FOREX   @map("forex")
+    CRYPTO  @map("crypto")
+    STOCKS  @map("stocks")
+    INDICES @map("indices")
 }
 
 model Symbol {

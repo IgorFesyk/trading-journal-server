@@ -1,28 +1,28 @@
 enum TRADE_STATUS {
-    WIN
-    LOSE
-    BE
-    IN_PROGRESS
+    WIN         @map("win")
+    LOSE        @map("lose")
+    BE          @map("be")
+    IN_PROGRESS @map("in-progress")
 }
 
 enum DIRECTION {
-    LONG
-    SHORT
+    LONG  @map("long")
+    SHORT @map("short")
 }
 
 enum TIMEFRAME {
-    M15
-    H1
-    H4
-    D1
-    W1
+    M15 @map("m15")
+    H1  @map("h1")
+    H4  @map("h4")
+    D1  @map("d1")
+    W1  @map("w1")
 }
 
 enum EXECUTION_SETUP {
-    IDM
-    SNR
-    FVG
-    MarketEntry
+    IDM         @map("idm")
+    SNR         @map("snr")
+    FVG         @map("fvg")
+    MarketEntry @map("market-entry")
 }
 
 model Trade {
@@ -45,6 +45,7 @@ model Trade {
     updatedAt    DateTime         @updatedAt @map("updated_at")
 
     @@index([accountId, openedAt])
+    @@index([accountId, closedAt])
     @@index([accountId, status])
     @@index([symbolId])
     @@map("trades")

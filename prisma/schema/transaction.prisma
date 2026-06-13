@@ -1,7 +1,7 @@
 enum TRANSACTION_TYPE {
-    DEPOSIT
-    WITHDRAWAL
-    ADJUSTMENT
+    DEPOSIT     @map("deposit")
+    WITHDRAWAL  @map("withdrawal")
+    ADJUSTMENT  @map("adjustment")
 }
 
 model Transaction {
@@ -16,5 +16,6 @@ model Transaction {
     updatedAt  DateTime         @updatedAt @map("updated_at")
 
     @@index([accountId, occurredAt])
+    @@index([accountId, type])
     @@map("transactions")
 }

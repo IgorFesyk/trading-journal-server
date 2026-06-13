@@ -77,6 +77,34 @@ docker exec server-trading-app-postgres-1 psql -U admin -d trading_journal -f /t
 
 Then re-run the seed command from step 5.
 
+## Database changes
+
+Every schema change follows the same three-step workflow:
+
+### 1. Edit the schema
+
+Make your changes in `prisma/schema/`. This includes adding models, fields, relations, enums, indexes, or `@map` annotations.
+
+### 2. Create and apply a migration
+
+```sh
+pnpm db:migrate
+```
+
+Prisma compares your schema against the current migration history, generates a `.sql` migration file under `prisma/schema/migrations/`, and applies it to the database. Commit the generated file alongside your schema change.
+
+> **Never use `pnpm db:push`.** It updates the database without writing a migration file, silently drifting the DB away from the migration history and breaking `pnpm db:migrate` for everyone else.
+
+### 3. Regenerate the Prisma client
+
+```sh
+pnpm db:generate
+```
+
+This rebuilds the TypeScript client in `src/generated/prisma/` to reflect the new schema. Always run this after `db:migrate` so the types stay in sync with your code.
+
+---
+
 ## Architecture
 
 **Layer order:** `routes -> controllers → services → prisma`

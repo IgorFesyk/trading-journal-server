@@ -1,19 +1,19 @@
 enum ACCOUNT_TYPE {
-    CAPITAL
-    PROP
+    CAPITAL     @map("capital")
+    PROP        @map("prop")
 }
 
 enum CURRENCY {
-    USD
-    EUR
-    GBP
+    USD     @map("usd")
+    EUR     @map("eur")
+    GBP     @map("gbp")
 }
 
 model Account {
     id             Int           @id @default(autoincrement())
     user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId         Int           @map("user_id")
-    name           String
+    name           String        @unique
     type           ACCOUNT_TYPE
     currency       CURRENCY
     trades         Trade[]
@@ -24,6 +24,5 @@ model Account {
     updatedAt      DateTime      @updatedAt @map("updated_at")
 
     @@unique([userId, name])
-    @@index([userId])
     @@map("accounts")
 }

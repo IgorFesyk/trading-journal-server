@@ -36,16 +36,16 @@ BEGIN;
 -- SYMBOLS
 -- -------------------------------------------------------
 INSERT INTO symbols (name, category) VALUES
-    ('EUR/USD', 'FOREX'),
-    ('GBP/USD', 'FOREX'),
-    ('GER40',   'INDICES');
+    ('EUR/USD', 'forex'),
+    ('GBP/USD', 'forex'),
+    ('GER40',   'indices');
 
 -- -------------------------------------------------------
 -- USERS
 -- -------------------------------------------------------
 INSERT INTO users (name, email, password, role, created_at, updated_at) VALUES
-    ('Admin User', 'admin@tradingjournal.dev', '$2b$12$MhRwSY6DbOlU/EADnpuyrONZSfJ5.f3zgYMwzCuVc/OpztbPDO5vW', 'ADMIN', NOW(), NOW()),
-    ('Bob Carter', 'bob@tradingjournal.dev',   '$2b$12$MhRwSY6DbOlU/EADnpuyrONZSfJ5.f3zgYMwzCuVc/OpztbPDO5vW', 'USER',  NOW(), NOW());
+    ('Admin User', 'admin@tradingjournal.dev', '$2b$12$MhRwSY6DbOlU/EADnpuyrONZSfJ5.f3zgYMwzCuVc/OpztbPDO5vW', 'admin', NOW(), NOW()),
+    ('Bob Carter', 'bob@tradingjournal.dev',   '$2b$12$MhRwSY6DbOlU/EADnpuyrONZSfJ5.f3zgYMwzCuVc/OpztbPDO5vW', 'user',  NOW(), NOW());
 
 -- -------------------------------------------------------
 -- ACCOUNTS  (3 per user)
@@ -53,12 +53,12 @@ INSERT INTO users (name, email, password, role, created_at, updated_at) VALUES
 -- e.g. 5000000 = $50,000.00
 -- -------------------------------------------------------
 INSERT INTO accounts (user_id, name, type, currency, starting_equity, target_equity, created_at, updated_at) VALUES
-    ((SELECT id FROM users WHERE email = 'admin@tradingjournal.dev'), 'Capital Account', 'CAPITAL', 'USD',  5000000,  7500000, NOW(), NOW()),
-    ((SELECT id FROM users WHERE email = 'admin@tradingjournal.dev'), 'Prop Challenge',  'PROP',    'EUR', 10000000, 11000000, NOW(), NOW()),
-    ((SELECT id FROM users WHERE email = 'admin@tradingjournal.dev'), 'Demo Account',    'CAPITAL', 'USD', 10000000, 12000000, NOW(), NOW()),
-    ((SELECT id FROM users WHERE email = 'bob@tradingjournal.dev'),   'Trading Account', 'CAPITAL', 'USD',  2500000,  5000000, NOW(), NOW()),
-    ((SELECT id FROM users WHERE email = 'bob@tradingjournal.dev'),   'Prop Firm',       'PROP',    'GBP',  5000000,  5500000, NOW(), NOW()),
-    ((SELECT id FROM users WHERE email = 'bob@tradingjournal.dev'),   'Swing Account',   'CAPITAL', 'EUR',  1000000,  2000000, NOW(), NOW());
+    ((SELECT id FROM users WHERE email = 'admin@tradingjournal.dev'), 'Capital Account', 'capital', 'usd',  5000000,  7500000, NOW(), NOW()),
+    ((SELECT id FROM users WHERE email = 'admin@tradingjournal.dev'), 'Prop Challenge',  'prop',    'eur', 10000000, 11000000, NOW(), NOW()),
+    ((SELECT id FROM users WHERE email = 'admin@tradingjournal.dev'), 'Demo Account',    'capital', 'usd', 10000000, 12000000, NOW(), NOW()),
+    ((SELECT id FROM users WHERE email = 'bob@tradingjournal.dev'),   'Trading Account', 'capital', 'usd',  2500000,  5000000, NOW(), NOW()),
+    ((SELECT id FROM users WHERE email = 'bob@tradingjournal.dev'),   'Prop Firm',       'prop',    'gbp',  5000000,  5500000, NOW(), NOW()),
+    ((SELECT id FROM users WHERE email = 'bob@tradingjournal.dev'),   'Swing Account',   'capital', 'eur',  1000000,  2000000, NOW(), NOW());
 
 -- ============================================================
 -- TRADES
@@ -130,29 +130,29 @@ SELECT
 
     -- Status enum
     CASE
-        WHEN i > 45                          THEN 'IN_PROGRESS'
-        WHEN (i % 9) IN (1, 2, 4, 5, 7)     THEN 'WIN'
-        WHEN (i % 9) IN (3, 6, 8)            THEN 'LOSE'
-        ELSE                                      'BE'
+        WHEN i > 45                          THEN 'in-progress'
+        WHEN (i % 9) IN (1, 2, 4, 5, 7)     THEN 'win'
+        WHEN (i % 9) IN (3, 6, 8)            THEN 'lose'
+        ELSE                                      'be'
     END::"TRADE_STATUS"  AS status,
 
     -- Alternate LONG / SHORT every row
-    CASE WHEN i % 2 = 1 THEN 'LONG' ELSE 'SHORT' END::"DIRECTION"  AS direction,
+    CASE WHEN i % 2 = 1 THEN 'long' ELSE 'short' END::"DIRECTION"  AS direction,
 
     -- Cycle through 4 timeframes
     CASE i % 4
-        WHEN 1 THEN 'H1'
-        WHEN 2 THEN 'H4'
-        WHEN 3 THEN 'D1'
-        ELSE        'M15'
+        WHEN 1 THEN 'h1'
+        WHEN 2 THEN 'h4'
+        WHEN 3 THEN 'd1'
+        ELSE        'm15'
     END::"TIMEFRAME"  AS entry_tf,
 
     -- Cycle through 4 setups
     CASE i % 4
-        WHEN 1 THEN 'FVG'
-        WHEN 2 THEN 'SNR'
-        WHEN 3 THEN 'IDM'
-        ELSE        'MarketEntry'
+        WHEN 1 THEN 'fvg'
+        WHEN 2 THEN 'snr'
+        WHEN 3 THEN 'idm'
+        ELSE        'market-entry'
     END::"EXECUTION_SETUP"  AS setup,
 
     NULL  AS notes,
@@ -207,14 +207,14 @@ SELECT
     (10 + i % 10) * 10,
     CASE WHEN i > 23 THEN NULL ELSE 400 + (i % 10) * 50 END,
     CASE
-        WHEN i > 23                          THEN 'IN_PROGRESS'
-        WHEN (i % 9) IN (1, 2, 4, 5, 7)     THEN 'WIN'
-        WHEN (i % 9) IN (3, 6, 8)            THEN 'LOSE'
-        ELSE                                      'BE'
+        WHEN i > 23                          THEN 'in-progress'
+        WHEN (i % 9) IN (1, 2, 4, 5, 7)     THEN 'win'
+        WHEN (i % 9) IN (3, 6, 8)            THEN 'lose'
+        ELSE                                      'be'
     END::"TRADE_STATUS",
-    CASE WHEN i % 2 = 1 THEN 'LONG' ELSE 'SHORT' END::"DIRECTION",
-    CASE i % 4 WHEN 1 THEN 'H1' WHEN 2 THEN 'H4' WHEN 3 THEN 'D1' ELSE 'M15' END::"TIMEFRAME",
-    CASE i % 4 WHEN 1 THEN 'FVG' WHEN 2 THEN 'SNR' WHEN 3 THEN 'IDM' ELSE 'MarketEntry' END::"EXECUTION_SETUP",
+    CASE WHEN i % 2 = 1 THEN 'long' ELSE 'short' END::"DIRECTION",
+    CASE i % 4 WHEN 1 THEN 'h1' WHEN 2 THEN 'h4' WHEN 3 THEN 'd1' ELSE 'm15' END::"TIMEFRAME",
+    CASE i % 4 WHEN 1 THEN 'fvg' WHEN 2 THEN 'snr' WHEN 3 THEN 'idm' ELSE 'market-entry' END::"EXECUTION_SETUP",
     NULL,
     opened_at,
     CASE
@@ -260,14 +260,14 @@ SELECT
     (10 + i % 10) * 10,
     CASE WHEN i > 9 THEN NULL ELSE 400 + (i % 10) * 50 END,
     CASE
-        WHEN i > 9                           THEN 'IN_PROGRESS'
-        WHEN (i % 9) IN (1, 2, 4, 5, 7)     THEN 'WIN'
-        WHEN (i % 9) IN (3, 6, 8)            THEN 'LOSE'
-        ELSE                                      'BE'
+        WHEN i > 9                           THEN 'in-progress'
+        WHEN (i % 9) IN (1, 2, 4, 5, 7)     THEN 'win'
+        WHEN (i % 9) IN (3, 6, 8)            THEN 'lose'
+        ELSE                                      'be'
     END::"TRADE_STATUS",
-    CASE WHEN i % 2 = 1 THEN 'LONG' ELSE 'SHORT' END::"DIRECTION",
-    CASE i % 4 WHEN 1 THEN 'H1' WHEN 2 THEN 'H4' WHEN 3 THEN 'D1' ELSE 'M15' END::"TIMEFRAME",
-    CASE i % 4 WHEN 1 THEN 'FVG' WHEN 2 THEN 'SNR' WHEN 3 THEN 'IDM' ELSE 'MarketEntry' END::"EXECUTION_SETUP",
+    CASE WHEN i % 2 = 1 THEN 'long' ELSE 'short' END::"DIRECTION",
+    CASE i % 4 WHEN 1 THEN 'h1' WHEN 2 THEN 'h4' WHEN 3 THEN 'd1' ELSE 'm15' END::"TIMEFRAME",
+    CASE i % 4 WHEN 1 THEN 'fvg' WHEN 2 THEN 'snr' WHEN 3 THEN 'idm' ELSE 'market-entry' END::"EXECUTION_SETUP",
     NULL,
     opened_at,
     CASE
@@ -313,14 +313,14 @@ SELECT
     (10 + i % 10) * 10,
     CASE WHEN i > 45 THEN NULL ELSE 400 + (i % 10) * 50 END,
     CASE
-        WHEN i > 45                          THEN 'IN_PROGRESS'
-        WHEN (i % 9) IN (1, 2, 4, 5, 7)     THEN 'WIN'
-        WHEN (i % 9) IN (3, 6, 8)            THEN 'LOSE'
-        ELSE                                      'BE'
+        WHEN i > 45                          THEN 'in-progress'
+        WHEN (i % 9) IN (1, 2, 4, 5, 7)     THEN 'win'
+        WHEN (i % 9) IN (3, 6, 8)            THEN 'lose'
+        ELSE                                      'be'
     END::"TRADE_STATUS",
-    CASE WHEN i % 2 = 1 THEN 'LONG' ELSE 'SHORT' END::"DIRECTION",
-    CASE i % 4 WHEN 1 THEN 'H1' WHEN 2 THEN 'H4' WHEN 3 THEN 'D1' ELSE 'M15' END::"TIMEFRAME",
-    CASE i % 4 WHEN 1 THEN 'FVG' WHEN 2 THEN 'SNR' WHEN 3 THEN 'IDM' ELSE 'MarketEntry' END::"EXECUTION_SETUP",
+    CASE WHEN i % 2 = 1 THEN 'long' ELSE 'short' END::"DIRECTION",
+    CASE i % 4 WHEN 1 THEN 'h1' WHEN 2 THEN 'h4' WHEN 3 THEN 'd1' ELSE 'm15' END::"TIMEFRAME",
+    CASE i % 4 WHEN 1 THEN 'fvg' WHEN 2 THEN 'snr' WHEN 3 THEN 'idm' ELSE 'market-entry' END::"EXECUTION_SETUP",
     NULL,
     opened_at,
     CASE
@@ -366,14 +366,14 @@ SELECT
     (10 + i % 10) * 10,
     CASE WHEN i > 23 THEN NULL ELSE 400 + (i % 10) * 50 END,
     CASE
-        WHEN i > 23                          THEN 'IN_PROGRESS'
-        WHEN (i % 9) IN (1, 2, 4, 5, 7)     THEN 'WIN'
-        WHEN (i % 9) IN (3, 6, 8)            THEN 'LOSE'
-        ELSE                                      'BE'
+        WHEN i > 23                          THEN 'in-progress'
+        WHEN (i % 9) IN (1, 2, 4, 5, 7)     THEN 'win'
+        WHEN (i % 9) IN (3, 6, 8)            THEN 'lose'
+        ELSE                                      'be'
     END::"TRADE_STATUS",
-    CASE WHEN i % 2 = 1 THEN 'LONG' ELSE 'SHORT' END::"DIRECTION",
-    CASE i % 4 WHEN 1 THEN 'H1' WHEN 2 THEN 'H4' WHEN 3 THEN 'D1' ELSE 'M15' END::"TIMEFRAME",
-    CASE i % 4 WHEN 1 THEN 'FVG' WHEN 2 THEN 'SNR' WHEN 3 THEN 'IDM' ELSE 'MarketEntry' END::"EXECUTION_SETUP",
+    CASE WHEN i % 2 = 1 THEN 'long' ELSE 'short' END::"DIRECTION",
+    CASE i % 4 WHEN 1 THEN 'h1' WHEN 2 THEN 'h4' WHEN 3 THEN 'd1' ELSE 'm15' END::"TIMEFRAME",
+    CASE i % 4 WHEN 1 THEN 'fvg' WHEN 2 THEN 'snr' WHEN 3 THEN 'idm' ELSE 'market-entry' END::"EXECUTION_SETUP",
     NULL,
     opened_at,
     CASE
@@ -419,14 +419,14 @@ SELECT
     (10 + i % 10) * 10,
     CASE WHEN i > 9 THEN NULL ELSE 400 + (i % 10) * 50 END,
     CASE
-        WHEN i > 9                           THEN 'IN_PROGRESS'
-        WHEN (i % 9) IN (1, 2, 4, 5, 7)     THEN 'WIN'
-        WHEN (i % 9) IN (3, 6, 8)            THEN 'LOSE'
-        ELSE                                      'BE'
+        WHEN i > 9                           THEN 'in-progress'
+        WHEN (i % 9) IN (1, 2, 4, 5, 7)     THEN 'win'
+        WHEN (i % 9) IN (3, 6, 8)            THEN 'lose'
+        ELSE                                      'be'
     END::"TRADE_STATUS",
-    CASE WHEN i % 2 = 1 THEN 'LONG' ELSE 'SHORT' END::"DIRECTION",
-    CASE i % 4 WHEN 1 THEN 'H1' WHEN 2 THEN 'H4' WHEN 3 THEN 'D1' ELSE 'M15' END::"TIMEFRAME",
-    CASE i % 4 WHEN 1 THEN 'FVG' WHEN 2 THEN 'SNR' WHEN 3 THEN 'IDM' ELSE 'MarketEntry' END::"EXECUTION_SETUP",
+    CASE WHEN i % 2 = 1 THEN 'long' ELSE 'short' END::"DIRECTION",
+    CASE i % 4 WHEN 1 THEN 'h1' WHEN 2 THEN 'h4' WHEN 3 THEN 'd1' ELSE 'm15' END::"TIMEFRAME",
+    CASE i % 4 WHEN 1 THEN 'fvg' WHEN 2 THEN 'snr' WHEN 3 THEN 'idm' ELSE 'market-entry' END::"EXECUTION_SETUP",
     NULL,
     opened_at,
     CASE
@@ -471,11 +471,11 @@ SELECT
     target_account.id,
 
     CASE tx_number.i % 5
-        WHEN 1 THEN 'DEPOSIT'
-        WHEN 2 THEN 'DEPOSIT'
-        WHEN 3 THEN 'WITHDRAWAL'
-        WHEN 4 THEN 'ADJUSTMENT'
-        ELSE        'WITHDRAWAL'
+        WHEN 1 THEN 'deposit'
+        WHEN 2 THEN 'deposit'
+        WHEN 3 THEN 'withdrawal'
+        WHEN 4 THEN 'adjustment'
+        ELSE        'withdrawal'
     END::"TRANSACTION_TYPE",
 
     -- Amounts in cents.  DEPOSIT: $2k–$9k.  WITHDRAWAL: $1k–$5k.  ADJUSTMENT: -$150 to -$750.
@@ -512,11 +512,11 @@ INSERT INTO transactions (account_id, type, amount, note, occurred_at, created_a
 SELECT
     target_account.id,
     CASE tx_number.i % 5
-        WHEN 1 THEN 'DEPOSIT'
-        WHEN 2 THEN 'DEPOSIT'
-        WHEN 3 THEN 'WITHDRAWAL'
-        WHEN 4 THEN 'ADJUSTMENT'
-        ELSE        'WITHDRAWAL'
+        WHEN 1 THEN 'deposit'
+        WHEN 2 THEN 'deposit'
+        WHEN 3 THEN 'withdrawal'
+        WHEN 4 THEN 'adjustment'
+        ELSE        'withdrawal'
     END::"TRANSACTION_TYPE",
     CASE tx_number.i % 5
         WHEN 1 THEN  (2 + tx_number.i % 8) * 100000
@@ -546,11 +546,11 @@ INSERT INTO transactions (account_id, type, amount, note, occurred_at, created_a
 SELECT
     target_account.id,
     CASE tx_number.i % 5
-        WHEN 1 THEN 'DEPOSIT'
-        WHEN 2 THEN 'DEPOSIT'
-        WHEN 3 THEN 'WITHDRAWAL'
-        WHEN 4 THEN 'ADJUSTMENT'
-        ELSE        'WITHDRAWAL'
+        WHEN 1 THEN 'deposit'
+        WHEN 2 THEN 'deposit'
+        WHEN 3 THEN 'withdrawal'
+        WHEN 4 THEN 'adjustment'
+        ELSE        'withdrawal'
     END::"TRANSACTION_TYPE",
     CASE tx_number.i % 5
         WHEN 1 THEN  (2 + tx_number.i % 8) * 100000
@@ -581,11 +581,11 @@ INSERT INTO transactions (account_id, type, amount, note, occurred_at, created_a
 SELECT
     target_account.id,
     CASE tx_number.i % 5
-        WHEN 1 THEN 'DEPOSIT'
-        WHEN 2 THEN 'DEPOSIT'
-        WHEN 3 THEN 'WITHDRAWAL'
-        WHEN 4 THEN 'ADJUSTMENT'
-        ELSE        'WITHDRAWAL'
+        WHEN 1 THEN 'deposit'
+        WHEN 2 THEN 'deposit'
+        WHEN 3 THEN 'withdrawal'
+        WHEN 4 THEN 'adjustment'
+        ELSE        'withdrawal'
     END::"TRANSACTION_TYPE",
     CASE tx_number.i % 5
         WHEN 1 THEN  (2 + tx_number.i % 8) * 100000
@@ -615,11 +615,11 @@ INSERT INTO transactions (account_id, type, amount, note, occurred_at, created_a
 SELECT
     target_account.id,
     CASE tx_number.i % 5
-        WHEN 1 THEN 'DEPOSIT'
-        WHEN 2 THEN 'DEPOSIT'
-        WHEN 3 THEN 'WITHDRAWAL'
-        WHEN 4 THEN 'ADJUSTMENT'
-        ELSE        'WITHDRAWAL'
+        WHEN 1 THEN 'deposit'
+        WHEN 2 THEN 'deposit'
+        WHEN 3 THEN 'withdrawal'
+        WHEN 4 THEN 'adjustment'
+        ELSE        'withdrawal'
     END::"TRANSACTION_TYPE",
     CASE tx_number.i % 5
         WHEN 1 THEN  (2 + tx_number.i % 8) * 100000
@@ -649,11 +649,11 @@ INSERT INTO transactions (account_id, type, amount, note, occurred_at, created_a
 SELECT
     target_account.id,
     CASE tx_number.i % 5
-        WHEN 1 THEN 'DEPOSIT'
-        WHEN 2 THEN 'DEPOSIT'
-        WHEN 3 THEN 'WITHDRAWAL'
-        WHEN 4 THEN 'ADJUSTMENT'
-        ELSE        'WITHDRAWAL'
+        WHEN 1 THEN 'deposit'
+        WHEN 2 THEN 'deposit'
+        WHEN 3 THEN 'withdrawal'
+        WHEN 4 THEN 'adjustment'
+        ELSE        'withdrawal'
     END::"TRANSACTION_TYPE",
     CASE tx_number.i % 5
         WHEN 1 THEN  (2 + tx_number.i % 8) * 100000

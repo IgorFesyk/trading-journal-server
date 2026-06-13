@@ -282,12 +282,12 @@ export type AccountOrderByWithRelationInput = {
 
 export type AccountWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  name?: string
   userId_name?: Prisma.AccountUserIdNameCompoundUniqueInput
   AND?: Prisma.AccountWhereInput | Prisma.AccountWhereInput[]
   OR?: Prisma.AccountWhereInput[]
   NOT?: Prisma.AccountWhereInput | Prisma.AccountWhereInput[]
   userId?: Prisma.IntFilter<"Account"> | number
-  name?: Prisma.StringFilter<"Account"> | string
   type?: Prisma.EnumACCOUNT_TYPEFilter<"Account"> | $Enums.ACCOUNT_TYPE
   currency?: Prisma.EnumCURRENCYFilter<"Account"> | $Enums.CURRENCY
   startingEquity?: Prisma.IntFilter<"Account"> | number
@@ -297,7 +297,7 @@ export type AccountWhereUniqueInput = Prisma.AtLeast<{
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   trades?: Prisma.TradeListRelationFilter
   transactions?: Prisma.TransactionListRelationFilter
-}, "id" | "userId_name">
+}, "id" | "name" | "userId_name">
 
 export type AccountOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

@@ -1,6 +1,6 @@
 enum ROLE {
-    ADMIN
-    USER
+    ADMIN @map("admin")
+    USER  @map("user")
 }
 
 model User {
