@@ -28,23 +28,24 @@ enum EXECUTION_SETUP {
 model Trade {
     id           Int              @id @default(autoincrement())
     account      Account          @relation(fields: [accountId], references: [id], onDelete: Cascade)
-    accountId    Int
+    accountId    Int              @map("account_id")
     symbol       Symbol           @relation(fields: [symbolId], references: [id])
-    symbolId     Int
+    symbolId     Int              @map("symbol_id")
     pnl          Int?             // cents: $10,50 -> 1050
     risk         Int              // pips: 1,52% -> 152
     commission   Int?             // cents: $12,4 -> 1240
     status       TRADE_STATUS
     direction    DIRECTION
-    entryTF      TIMEFRAME
+    entryTF      TIMEFRAME        @map("entry_tf")
     setup        EXECUTION_SETUP
     notes        String?
-    openedAt     DateTime
-    closedAt     DateTime?
-    createdAt    DateTime         @default(now())
-    updatedAt    DateTime         @updatedAt
+    openedAt     DateTime         @map("opened_at")
+    closedAt     DateTime?        @map("closed_at")
+    createdAt    DateTime         @default(now()) @map("created_at")
+    updatedAt    DateTime         @updatedAt @map("updated_at")
 
     @@index([accountId, openedAt])
     @@index([accountId, status])
     @@index([symbolId])
+    @@map("trades")
 }

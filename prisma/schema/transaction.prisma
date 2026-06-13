@@ -5,15 +5,16 @@ enum TRANSACTION_TYPE {
 }
 
 model Transaction {
-    id         Int             @id @default(autoincrement())
-    account    Account         @relation(fields: [accountId], references: [id], onDelete: Cascade)
-    accountId  Int
+    id         Int              @id @default(autoincrement())
+    account    Account          @relation(fields: [accountId], references: [id], onDelete: Cascade)
+    accountId  Int              @map("account_id")
     type       TRANSACTION_TYPE
-    amount     Int             // cents: $12,54 -> 1254
+    amount     Int              // cents: $12,54 -> 1254
     note       String?
-    occurredAt DateTime
-    createdAt  DateTime        @default(now())
-    updatedAt  DateTime        @default(now()) @updatedAt
+    occurredAt DateTime         @map("occurred_at")
+    createdAt  DateTime         @default(now()) @map("created_at")
+    updatedAt  DateTime         @updatedAt @map("updated_at")
 
     @@index([accountId, occurredAt])
+    @@map("transactions")
 }

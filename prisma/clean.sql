@@ -4,10 +4,10 @@
 -- ============================================================
 
 TRUNCATE TABLE
-  "Transaction",
-  "Trade",
-  "Token",
-  "Account",
-  "User",
-  "Symbol"
+  transactions,
+  trades,
+  tokens,
+  accounts,
+  users,
+  symbols
 RESTART IDENTITY CASCADE;

@@ -50,6 +50,8 @@ docker compose up -d
 
 The schema is split into multiple files under `prisma/schema/`. The generated client outputs to `src/generated/prisma/` (not `node_modules`). Import from `../generated/prisma/client`, not from `@prisma/client`. Run `pnpm db:generate` after any schema change.
 
+**Never use `pnpm db:push` (`prisma db push`).** It updates the database without creating a migration file, which silently drifts the DB away from the migration history and breaks `prisma migrate dev` for everyone. Every schema change must go through `pnpm db:migrate` (`prisma migrate dev`) so a migration file is created and committed alongside the schema change. If `prisma migrate dev` cannot be run (e.g. non-interactive terminal), stop and ask the user to run it themselves.
+
 ## Testing
 
 Tests use Vitest + supertest against the real Express app. Services are mocked with `vi.mock(...)` — tests do not hit the database. The setup file (`src/test/setup.ts`) provides env vars so Zod env validation passes without a real `.env`.

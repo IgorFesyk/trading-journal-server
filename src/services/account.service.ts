@@ -10,13 +10,7 @@ type CreateAccountInput = {
     targetEquity?: number;
 };
 
-type UpdateAccountInput = {
-    name?: string;
-    type?: ACCOUNT_TYPE;
-    currency?: CURRENCY;
-    startingEquity?: number;
-    targetEquity?: number;
-};
+type UpdateAccountInput = Partial<Omit<CreateAccountInput, 'userId'>>;
 
 export const accountService = {
     create(data: CreateAccountInput) {

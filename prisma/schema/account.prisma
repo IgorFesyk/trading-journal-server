@@ -12,17 +12,18 @@ enum CURRENCY {
 model Account {
     id             Int           @id @default(autoincrement())
     user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-    userId         Int
+    userId         Int           @map("user_id")
     name           String
     type           ACCOUNT_TYPE
     currency       CURRENCY
     trades         Trade[]
     transactions   Transaction[]
-    startingEquity Int           // cents: $10.000 -> 10.000.00
-    targetEquity   Int?          // cents: $15.000 -> 15.000.00
-    createdAt      DateTime      @default(now())
-    updatedAt      DateTime      @updatedAt
+    startingEquity Int           @map("starting_equity") // cents: $10.000 -> 10.000.00
+    targetEquity   Int?          @map("target_equity")   // cents: $15.000 -> 15.000.00
+    createdAt      DateTime      @default(now()) @map("created_at")
+    updatedAt      DateTime      @updatedAt @map("updated_at")
 
     @@unique([userId, name])
     @@index([userId])
+    @@map("accounts")
 }

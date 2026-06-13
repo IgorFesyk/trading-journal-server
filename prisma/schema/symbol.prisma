@@ -10,4 +10,6 @@ model Symbol {
     name     String   @unique
     category CATEGORY
     trades   Trade[]
+
+    @@map("symbols")
 }

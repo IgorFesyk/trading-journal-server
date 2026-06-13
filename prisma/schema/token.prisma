@@ -1,5 +1,7 @@
 model Token {
-    userId       Int    @id
+    userId       Int    @id @map("user_id")
     user         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-    refreshToken String @unique
+    refreshToken String @unique @map("refresh_token")
+
+    @@map("tokens")
 }

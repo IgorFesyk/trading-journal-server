@@ -11,6 +11,8 @@ model User {
     role      ROLE      @default(USER)
     accounts  Account[]
     token     Token?    // TODO: multiple sessions
-    createdAt DateTime  @default(now())
-    updatedAt DateTime  @default(now()) @updatedAt
+    createdAt DateTime  @default(now()) @map("created_at")
+    updatedAt DateTime  @default(now()) @updatedAt @map("updated_at")
+
+    @@map("users")
 }
