@@ -26,6 +26,8 @@ router.get('/:id', authMiddleware, accountController.getById);
 router.put('/:id', authMiddleware, validateMiddleware(updateAccountSchema), accountController.update);
 router.delete('/:id', authMiddleware, accountController.delete);
 
+router.get('/:id/stats', authMiddleware, accountController.getAccountStats);
+
 router.use('/:accountId/trades', tradeRoutes);
 router.use('/:accountId/transactions', transactionRoutes);
 

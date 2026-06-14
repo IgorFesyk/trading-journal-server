@@ -59,4 +59,17 @@ export const accountController = {
             next(err);
         }
     },
+
+    async getAccountStats(req: Request, res: Response, next: NextFunction) {
+        try {
+            const account = await accountService.getAccountStats(Number(req.params.id), req.user.id);
+            if (!account) {
+                return next(ApiError.NotFound('Account not found'));
+            }
+
+            res.json(account);
+        } catch (err) {
+            next(err);
+        }
+    },
 };
