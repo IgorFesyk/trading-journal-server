@@ -16,7 +16,7 @@ const createTradeSchema = z.object({
     status: z.enum(TRADE_STATUS).default('IN_PROGRESS'),
     pnl: z.coerce.number().int().optional(),
     commission: z.coerce.number().int().default(0),
-    notes: z.string().optional(),
+    notes: z.string().max(1000).optional(),
     closedAt: z.coerce.date().optional(),
 });
 
@@ -27,12 +27,20 @@ const getTradesQuerySchema = z.object({
     direction: z.enum(DIRECTION).optional(),
 });
 
+const idParamSchema = z.object({ id: z.coerce.number().int().positive() });
+
 const router: Router = Router({ mergeParams: true });
 
 router.post('/', authMiddleware, validateMiddleware(createTradeSchema), tradeController.create);
 router.get('/', authMiddleware, validateMiddleware(getTradesQuerySchema, 'query'), tradeController.getByAccount);
-router.get('/:id', authMiddleware, tradeController.getById);
-router.put('/:id', authMiddleware, validateMiddleware(updateTradeSchema), tradeController.update);
-router.delete('/:id', authMiddleware, tradeController.delete);
+router.get('/:id', authMiddleware, validateMiddleware(idParamSchema, 'params'), tradeController.getById);
+router.put(
+    '/:id',
+    authMiddleware,
+    validateMiddleware(idParamSchema, 'params'),
+    validateMiddleware(updateTradeSchema),
+    tradeController.update
+);
+router.delete('/:id', authMiddleware, validateMiddleware(idParamSchema, 'params'), tradeController.delete);
 
 export default router;

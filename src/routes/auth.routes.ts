@@ -5,8 +5,8 @@ import { authController } from '../controllers/auth.controller';
 import { validateMiddleware } from '../middlewares/validate.middleware';
 
 const signupSchema = z.object({
-    name: z.string('Name must be a string').nonempty('Name is required'),
-    email: z.string('Email is required').email('Email must be a valid email address'),
+    name: z.string('Name must be a string').nonempty('Name is required').max(50, 'Name must be at most 50 characters'),
+    email: z.email('Email must be a valid email address'),
     password: z
         .string('Password is required')
         .min(8, 'Password must be at least 8 characters')
@@ -14,7 +14,7 @@ const signupSchema = z.object({
 });
 
 const signinSchema = z.object({
-    email: z.string('Email is required').email('Email must be a valid email address'),
+    email: z.email('Email must be a valid email address'),
     password: z
         .string('Password is required')
         .min(8, 'Password must be at least 8 characters')

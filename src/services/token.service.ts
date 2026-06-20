@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { z } from 'zod';
 
@@ -24,23 +25,23 @@ export const tokenService = {
 
     // TODO: support multiple tokens per user?
     async saveToken(userId: number, refreshToken: string) {
+        const tokenHash = await bcrypt.hash(refreshToken, 12);
         return await prisma.token.upsert({
             where: { userId },
-            update: { refreshToken },
-            create: {
-                userId,
-                refreshToken,
-            },
+            update: { refreshToken: tokenHash },
+            create: { userId, refreshToken: tokenHash },
         });
     },
 
-    // TODO: what if not exists in the DB?
-    async removeToken(refreshToken: string) {
-        return await prisma.token.delete({ where: { refreshToken } });
+    async removeToken(userId: number) {
+        return await prisma.token.deleteMany({ where: { userId } });
     },
 
-    async findToken(refreshToken: string) {
-        return await prisma.token.findUnique({ where: { refreshToken } });
+    async checkToken(userId: number, rawToken: string): Promise<boolean> {
+        const stored = await prisma.token.findUnique({ where: { userId } });
+        if (!stored) return false;
+
+        return bcrypt.compare(rawToken, stored.refreshToken);
     },
 
     validateAccessToken(token: string): TokenPayload | null {

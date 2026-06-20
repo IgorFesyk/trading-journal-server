@@ -10,14 +10,12 @@ type User = {
     name: string;
 };
 
-type Tokens = {
-    accessToken: string;
-    refreshToken: string;
-};
-
 type AuthResult = {
-    tokens: Tokens;
     user: User;
+    tokens: {
+        accessToken: string;
+        refreshToken: string;
+    };
 };
 
 export const authService = {
@@ -41,7 +39,10 @@ export const authService = {
         });
         await tokenService.saveToken(user.id, tokens.refreshToken);
 
-        return { tokens, user: { id: user.id, email: user.email, name: user.name } };
+        return {
+            tokens,
+            user: { id: user.id, email: user.email, name: user.name },
+        };
     },
 
     async signin(email: string, password: string): Promise<AuthResult> {
@@ -63,12 +64,18 @@ export const authService = {
         });
         await tokenService.saveToken(user.id, tokens.refreshToken);
 
-        return { tokens, user: { id: user.id, name: user.name, email: user.email } };
+        return {
+            tokens,
+            user: { id: user.id, name: user.name, email: user.email },
+        };
     },
 
     async logout(refreshToken: string) {
         // TODO: Add Redis blacklist for tokens
-        return tokenService.removeToken(refreshToken);
+        const userData = tokenService.validateRefreshToken(refreshToken);
+        if (userData) {
+            await tokenService.removeToken(userData.id);
+        }
     },
 
     async refresh(refreshToken: string): Promise<AuthResult> {
@@ -81,8 +88,8 @@ export const authService = {
             throw ApiError.UnauthorizedError();
         }
 
-        const tokenFromDB = await tokenService.findToken(refreshToken);
-        if (!tokenFromDB) {
+        const isTokenValid = await tokenService.checkToken(userData.id, refreshToken);
+        if (!isTokenValid) {
             throw ApiError.UnauthorizedError();
         }
 
@@ -99,6 +106,9 @@ export const authService = {
         });
         await tokenService.saveToken(user.id, tokens.refreshToken);
 
-        return { tokens, user: { id: user.id, email: user.email, name: user.name } };
+        return {
+            tokens,
+            user: { id: user.id, email: user.email, name: user.name },
+        };
     },
 };

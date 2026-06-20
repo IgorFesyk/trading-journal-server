@@ -10,7 +10,7 @@ const createTransactionSchema = z.object({
     type: z.enum(TRANSACTION_TYPE),
     amount: z.coerce.number().int().positive(),
     occurredAt: z.coerce.date(),
-    note: z.string().optional(),
+    note: z.string().max(1000).optional(),
 });
 
 const updateTransactionSchema = createTransactionSchema.partial();
@@ -18,6 +18,8 @@ const updateTransactionSchema = createTransactionSchema.partial();
 const getTransactionsQuerySchema = z.object({
     type: z.enum(TRANSACTION_TYPE).optional(),
 });
+
+const idParamSchema = z.object({ id: z.coerce.number().int().positive() });
 
 const router: Router = Router({ mergeParams: true });
 
@@ -28,8 +30,14 @@ router.get(
     validateMiddleware(getTransactionsQuerySchema, 'query'),
     transactionController.getByAccount
 );
-router.get('/:id', authMiddleware, transactionController.getById);
-router.put('/:id', authMiddleware, validateMiddleware(updateTransactionSchema), transactionController.update);
-router.delete('/:id', authMiddleware, transactionController.delete);
+router.get('/:id', authMiddleware, validateMiddleware(idParamSchema, 'params'), transactionController.getById);
+router.put(
+    '/:id',
+    authMiddleware,
+    validateMiddleware(idParamSchema, 'params'),
+    validateMiddleware(updateTransactionSchema),
+    transactionController.update
+);
+router.delete('/:id', authMiddleware, validateMiddleware(idParamSchema, 'params'), transactionController.delete);
 
 export default router;

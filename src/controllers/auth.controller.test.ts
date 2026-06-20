@@ -34,7 +34,7 @@ describe('AuthController', () => {
     });
 
     describe('POST /auth/sign-up', () => {
-        it('returns 201 with user and tokens on success', async () => {
+        it('returns 201 with accessToken and user on success', async () => {
             vi.mocked(authService.signup).mockResolvedValue({
                 tokens: mockedTokens,
                 user: mockedUser,
@@ -44,7 +44,7 @@ describe('AuthController', () => {
 
             expect(response.status).toBe(201);
             expect(response.body).toEqual({
-                tokens: mockedTokens,
+                accessToken: mockedTokens.accessToken,
                 user: mockedUser,
             });
         });
@@ -134,7 +134,7 @@ describe('AuthController', () => {
     });
 
     describe('POST /auth/sign-in', () => {
-        it('returns 200 with user and tokens on valid credentials', async () => {
+        it('returns 200 with accessToken and user on valid credentials', async () => {
             vi.mocked(authService.signin).mockResolvedValue({
                 tokens: mockedTokens,
                 user: mockedUser,
@@ -144,7 +144,7 @@ describe('AuthController', () => {
 
             expect(response.status).toBe(200);
             expect(response.body).toEqual({
-                tokens: mockedTokens,
+                accessToken: mockedTokens.accessToken,
                 user: mockedUser,
             });
         });
@@ -235,7 +235,7 @@ describe('AuthController', () => {
 
     describe('POST /auth/logout', () => {
         it('returns 200 and clears refreshToken cookie', async () => {
-            vi.mocked(authService.logout).mockResolvedValue({ userId: 1, refreshToken: 'refresh-token' });
+            vi.mocked(authService.logout).mockResolvedValue(undefined);
 
             const response = await request(app).post('/auth/logout').set('Cookie', 'refreshToken=refresh-token');
 
@@ -246,7 +246,7 @@ describe('AuthController', () => {
         });
 
         it('calls logout service with the refreshToken from cookie', async () => {
-            vi.mocked(authService.logout).mockResolvedValue({ userId: 1, refreshToken: 'refresh-token' });
+            vi.mocked(authService.logout).mockResolvedValue(undefined);
 
             await request(app).post('/auth/logout').set('Cookie', 'refreshToken=refresh-token');
 
@@ -265,7 +265,7 @@ describe('AuthController', () => {
     });
 
     describe('POST /auth/refresh', () => {
-        it('returns 200 with new user and tokens on valid refreshToken cookie', async () => {
+        it('returns 200 with new accessToken and user on valid refreshToken cookie', async () => {
             vi.mocked(authService.refresh).mockResolvedValue({
                 tokens: mockedTokens,
                 user: mockedUser,
@@ -275,7 +275,7 @@ describe('AuthController', () => {
 
             expect(response.status).toBe(200);
             expect(response.body).toEqual({
-                tokens: mockedTokens,
+                accessToken: mockedTokens.accessToken,
                 user: mockedUser,
             });
         });

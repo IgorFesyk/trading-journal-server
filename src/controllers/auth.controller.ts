@@ -6,17 +6,18 @@ const REFRESH_TOKEN_MAX_AGE = 7 * 24 * 60 * 60 * 1000; // 7 days
 const cookieOptions: CookieOptions = {
     maxAge: REFRESH_TOKEN_MAX_AGE,
     httpOnly: true,
-    sameSite: true,
+    sameSite: 'strict',
+    secure: true,
 };
 
 export const authController = {
     async signup(req: Request, res: Response, next: NextFunction) {
         try {
             const { name, email, password } = req.body;
-            const data = await authService.signup(name, email, password);
+            const { tokens, user } = await authService.signup(name, email, password);
 
-            res.cookie('refreshToken', data.tokens.refreshToken, cookieOptions);
-            res.status(201).json(data);
+            res.cookie('refreshToken', tokens.refreshToken, cookieOptions);
+            res.status(201).json({ accessToken: tokens.accessToken, user });
         } catch (err) {
             next(err);
         }
@@ -25,10 +26,10 @@ export const authController = {
     async signin(req: Request, res: Response, next: NextFunction) {
         try {
             const { email, password } = req.body;
-            const data = await authService.signin(email, password);
+            const { tokens, user } = await authService.signin(email, password);
 
-            res.cookie('refreshToken', data.tokens.refreshToken, cookieOptions);
-            res.json(data);
+            res.cookie('refreshToken', tokens.refreshToken, cookieOptions);
+            res.json({ accessToken: tokens.accessToken, user });
         } catch (err) {
             next(err);
         }
@@ -51,10 +52,10 @@ export const authController = {
     async refresh(req: Request, res: Response, next: NextFunction) {
         try {
             const { refreshToken } = req.cookies;
-            const data = await authService.refresh(refreshToken);
+            const { tokens, user } = await authService.refresh(refreshToken);
 
-            res.cookie('refreshToken', data.tokens.refreshToken, cookieOptions);
-            res.json(data);
+            res.cookie('refreshToken', tokens.refreshToken, cookieOptions);
+            res.json({ accessToken: tokens.accessToken, user });
         } catch (err) {
             next(err);
         }

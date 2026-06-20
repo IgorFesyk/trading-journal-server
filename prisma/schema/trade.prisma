@@ -32,7 +32,7 @@ model Trade {
     symbol       Symbol           @relation(fields: [symbolId], references: [id])
     symbolId     Int              @map("symbol_id")
     pnl          Int?             // cents: $10,50 -> 1050
-    risk         Int              // pips: 1,52% -> 152
+    risk         Int              // bips: 1,52% -> 152
     commission   Int?             // cents: $12,4 -> 1240
     status       TRADE_STATUS
     direction    DIRECTION

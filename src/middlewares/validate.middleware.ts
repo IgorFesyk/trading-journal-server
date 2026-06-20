@@ -1,17 +1,26 @@
 import { NextFunction, Request, Response } from 'express';
-import z from 'zod';
+import { z } from 'zod';
 
-export function validateMiddleware(schema: z.Schema, target: 'body' | 'query' = 'body') {
+export function validateMiddleware<T extends z.ZodType<Record<string, unknown>>>(
+    schema: T,
+    target: 'body' | 'query' | 'params' = 'body'
+) {
     return (req: Request, _res: Response, next: NextFunction) => {
         const result = schema.safeParse(req[target]);
         if (!result.success) {
             return next(result.error);
         }
 
-        if (target === 'query') {
-            Object.defineProperty(req, 'query', { value: result.data, writable: true, configurable: true });
+        if (target === 'body') {
+            req.body = result.data;
+        } else if (target === 'params') {
+            Object.defineProperty(req, 'params', {
+                value: { ...req.params, ...result.data },
+                writable: true,
+                configurable: true,
+            });
         } else {
-            req[target] = result.data;
+            Object.defineProperty(req, target, { value: result.data, writable: true, configurable: true });
         }
 
         next();
