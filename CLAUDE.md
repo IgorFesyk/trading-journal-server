@@ -5,24 +5,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```sh
-pnpm dev          # start dev server (nodemon + tsx, hot-reload on src/)
-pnpm build        # compile TypeScript to dist/
-pnpm test         # run all tests once
-pnpm test:watch   # run tests in watch mode
-pnpm lint         # lint src/ with ESLint
-pnpm lint:fix     # lint and auto-fix
-pnpm format       # format src/ with Prettier
+npm run dev          # start dev server (nodemon + tsx, hot-reload on src/)
+npm run build        # compile TypeScript to dist/
+npm test             # run all tests once
+npm run test:watch   # run tests in watch mode
+npm run lint         # lint src/ with ESLint
+npm run lint:fix     # lint and auto-fix
+npm run format       # format src/ with Prettier
 
-pnpm db:migrate   # run Prisma migrations (requires running DB)
-pnpm db:generate  # regenerate Prisma client to src/generated/prisma/
-pnpm db:push      # push schema without creating a migration
-pnpm db:studio    # open Prisma Studio
+npm run db:migrate   # run Prisma migrations (requires running DB)
+npm run db:generate  # regenerate Prisma client to src/generated/prisma/
+npm run db:studio    # open Prisma Studio
 ```
 
 Run a single test file:
 
 ```sh
-pnpm vitest run src/controllers/auth.controller.test.ts
+npx vitest run src/controllers/auth.controller.test.ts
 ```
 
 Start the database before running migrations or the dev server:
@@ -48,9 +47,9 @@ docker compose up -d
 
 ## Prisma
 
-The schema is split into multiple files under `prisma/schema/`. The generated client outputs to `src/generated/prisma/` (not `node_modules`). Import from `../generated/prisma/client`, not from `@prisma/client`. Run `pnpm db:generate` after any schema change.
+The schema is split into multiple files under `prisma/schema/`. The generated client outputs to `src/generated/prisma/` (not `node_modules`). Import from `../generated/prisma/client`, not from `@prisma/client`. Run `npm run db:generate` after any schema change.
 
-**Never use `pnpm db:push` (`prisma db push`).** It updates the database without creating a migration file, which silently drifts the DB away from the migration history and breaks `prisma migrate dev` for everyone. Every schema change must go through `pnpm db:migrate` (`prisma migrate dev`) so a migration file is created and committed alongside the schema change. If `prisma migrate dev` cannot be run (e.g. non-interactive terminal), stop and ask the user to run it themselves.
+**Never use `prisma db push`.** It updates the database without creating a migration file, which silently drifts the DB away from the migration history and breaks `prisma migrate dev` for everyone. Every schema change must go through `npm run db:migrate` (`prisma migrate dev`) so a migration file is created and committed alongside the schema change. If `prisma migrate dev` cannot be run (e.g. non-interactive terminal), stop and ask the user to run it themselves.
 
 ## Testing
 

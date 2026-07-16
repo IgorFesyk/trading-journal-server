@@ -11,12 +11,11 @@ A REST API backend for tracking personal trading activity. Supports multiple acc
 - **Auth:** JWT — access token (15 min) + refresh token (7 days)
 - **Testing:** Vitest + supertest
 - **Linter:** ESLint + Prettier
-- **Package manager:** pnpm
+- **Package manager:** npm
 
 ## Prerequisites
 
 - [Node.js](https://nodejs.org/)
-- [pnpm](https://pnpm.io/)
 - [Docker](https://www.docker.com/)
 
 ## Setup
@@ -24,7 +23,7 @@ A REST API backend for tracking personal trading activity. Supports multiple acc
 ### 1. Install dependencies
 
 ```sh
-pnpm install
+npm install
 ```
 
 ### 2. Configure environment
@@ -42,7 +41,7 @@ docker compose up -d
 ### 4. Run migrations
 
 ```sh
-pnpm db:migrate
+npm run db:migrate
 ```
 
 ### 5. Seed the database
@@ -59,7 +58,7 @@ This inserts 2 users, 6 accounts, 170 trades, and 80 transactions. All user pass
 ### 6. Start the dev server
 
 ```sh
-pnpm dev
+npm run dev
 ```
 
 The server will be available at `http://localhost:5000`.
@@ -88,17 +87,17 @@ Make your changes in `prisma/schema/`. This includes adding models, fields, rela
 ### 2. Create and apply a migration
 
 ```sh
-pnpm db:migrate
+npm run db:migrate
 ```
 
 Prisma compares your schema against the current migration history, generates a `.sql` migration file under `prisma/schema/migrations/`, and applies it to the database. Commit the generated file alongside your schema change.
 
-> **Never use `pnpm db:push`.** It updates the database without writing a migration file, silently drifting the DB away from the migration history and breaking `pnpm db:migrate` for everyone else.
+> **Never use `prisma db push`.** It updates the database without writing a migration file, silently drifting the DB away from the migration history and breaking `npm run db:migrate` for everyone else.
 
 ### 3. Regenerate the Prisma client
 
 ```sh
-pnpm db:generate
+npm run db:generate
 ```
 
 This rebuilds the TypeScript client in `src/generated/prisma/` to reflect the new schema. Always run this after `db:migrate` so the types stay in sync with your code.
