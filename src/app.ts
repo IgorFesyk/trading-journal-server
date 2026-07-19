@@ -25,7 +25,7 @@ app.use(
 );
 
 app.get('/health', (_req, res) => {
-    res.json({ status: 'ok' });
+    res.json({ status: 'ok', hello: true });
 });
 
 const isTestEnv = env.NODE_ENV === 'test';
