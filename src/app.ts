@@ -9,6 +9,7 @@ import accountRoutes from './routes/account.routes';
 import authRoutes from './routes/auth.routes';
 import symbolRoutes from './routes/symbol.routes';
 import userRoutes from './routes/user.routes';
+import versionRoutes from './routes/version.routes';
 
 const app: Express = express();
 
@@ -50,6 +51,7 @@ app.use('/auth', authLimiter, authRoutes);
 app.use('/users', apiLimiter, userRoutes);
 app.use('/accounts', apiLimiter, accountRoutes);
 app.use('/symbols', apiLimiter, symbolRoutes);
+app.use('/version', apiLimiter, versionRoutes);
 
 app.use(errorMiddleware);
 
