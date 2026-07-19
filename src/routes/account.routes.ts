@@ -33,14 +33,12 @@ router.put(
     accountController.update
 );
 router.delete('/:id', authMiddleware, validateMiddleware(idParamSchema, 'params'), accountController.delete);
-
 router.get(
     '/:id/stats',
     authMiddleware,
     validateMiddleware(idParamSchema, 'params'),
     accountController.getAccountStats
 );
-
 router.use('/:accountId/trades', tradeRoutes);
 router.use('/:accountId/transactions', transactionRoutes);
 
