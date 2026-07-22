@@ -51,14 +51,17 @@ jobs:
 
                   if [ "$CURRENT_VERSION" = "$PREVIOUS_VERSION" ] || [ -z "$PREVIOUS_VERSION" ]; then
                       npm version patch --no-git-tag-version
-                      NEW_VERSION=$(node -p "require('./package.json').version")
+                      VERSION=$(node -p "require('./package.json').version")
                       git add package.json
-                      git commit -m "chore: bump version to $NEW_VERSION [skip ci]"
+                      git commit -m "chore: bump version to $VERSION [skip ci]"
                       git push origin HEAD:master
-                      echo "version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
                   else
-                      echo "version=$CURRENT_VERSION" >> "$GITHUB_OUTPUT"
+                      VERSION="$CURRENT_VERSION"
                   fi
+
+                  git tag -a "v$VERSION" -m "Release $VERSION"
+                  git push origin "v$VERSION"
+                  echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
     build-and-push:
         needs: version-bump
