@@ -63,7 +63,6 @@ export const versionService = {
         }
 
         const data = githubReleasesResponseSchema.parse(await response.json());
-
         return data.map((release) => release.tag_name);
     },
 };
