@@ -15,4 +15,22 @@ export const versionController = {
             next(err);
         }
     },
+
+    async getClientCurrent(req: Request, res: Response, next: NextFunction) {
+        try {
+            const version = await versionService.getClientCurrent();
+            res.json({ version });
+        } catch (err) {
+            next(err);
+        }
+    },
+
+    async getClientAllAvailable(req: Request, res: Response, next: NextFunction) {
+        try {
+            const versions = await versionService.getClientAllAvailable();
+            res.json({ versions });
+        } catch (err) {
+            next(err);
+        }
+    },
 };
