@@ -101,6 +101,7 @@ jobs:
                   key: ${{ secrets.EC2_SSH_KEY }}
                   script: |
                       cd /home/ec2-user
+                      docker image prune -af
                       docker pull igorfesyk/trading-journal-server:${{ needs.version-bump.outputs.version }}
                       docker run --rm --env-file .env igorfesyk/trading-journal-server:${{ needs.version-bump.outputs.version }} npx prisma migrate deploy
                       docker stop trading-journal-server || true
