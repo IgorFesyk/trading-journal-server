@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 
 import { prisma } from '../infra/prisma';
 import { ApiError } from '../libs/api-error';
+import { googleService } from './google.service';
 import { tokenService } from './token.service';
 
 type User = {
@@ -51,6 +52,10 @@ export const authService = {
             throw ApiError.BadRequest('Invalid credentials');
         }
 
+        if (!user.password) {
+            throw ApiError.BadRequest('Invalid credentials');
+        }
+
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             throw ApiError.BadRequest('Invalid credentials');
@@ -68,6 +73,30 @@ export const authService = {
             tokens,
             user: { id: user.id, name: user.name, email: user.email },
         };
+    },
+
+    async signInWithGoogle(idToken: string): Promise<AuthResult> {
+        const profile = await googleService.verifyIdToken(idToken);
+        let user = await prisma.user.findUnique({ where: { googleId: profile.googleId } });
+
+        if (!user) {
+            const existing = await prisma.user.findUnique({ where: { email: profile.email } });
+            user = existing
+                ? await prisma.user.update({ where: { id: existing.id }, data: { googleId: profile.googleId } })
+                : await prisma.user.create({
+                      data: { name: profile.name, email: profile.email, googleId: profile.googleId },
+                  });
+        }
+
+        const tokens = tokenService.generateTokens({
+            id: user.id,
+            role: user.role,
+            email: user.email,
+            name: user.name,
+        });
+        await tokenService.saveToken(user.id, tokens.refreshToken);
+
+        return { tokens, user: { id: user.id, name: user.name, email: user.email } };
     },
 
     async logout(refreshToken: string) {

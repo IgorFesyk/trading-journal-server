@@ -7,7 +7,8 @@ model User {
     id        Int       @id @default(autoincrement())
     name      String
     email     String    @unique
-    password  String
+    password  String?
+    googleId  String?   @unique @map("google_id")
     role      ROLE      @default(USER)
     accounts  Account[]
     token     Token?    // TODO: multiple sessions

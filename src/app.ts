@@ -4,6 +4,7 @@ import express, { Express } from 'express';
 import rateLimit from 'express-rate-limit';
 
 import { env } from './env';
+import mcpRoutes from './mcp/mcp.routes';
 import { errorMiddleware } from './middlewares/error.middleware';
 import accountRoutes from './routes/account.routes';
 import authRoutes from './routes/auth.routes';
@@ -52,6 +53,7 @@ app.use('/users', apiLimiter, userRoutes);
 app.use('/accounts', apiLimiter, accountRoutes);
 app.use('/symbols', apiLimiter, symbolRoutes);
 app.use('/version', apiLimiter, versionRoutes);
+app.use('/mcp', mcpRoutes);
 
 app.use(errorMiddleware);
 

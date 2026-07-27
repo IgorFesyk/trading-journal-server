@@ -324,4 +324,87 @@ describe('AuthController', () => {
             expect(response.body).toEqual({ message: 'Unexpected error' });
         });
     });
+
+    describe('POST /auth/google', () => {
+        const validGoogleBody = { credential: 'valid-id-token' };
+
+        it('returns 200 with accessToken and user on a valid Google ID token', async () => {
+            vi.mocked(authService.signInWithGoogle).mockResolvedValue({
+                tokens: mockedTokens,
+                user: mockedUser,
+            });
+
+            const response = await request(app).post('/auth/google').send(validGoogleBody);
+
+            expect(response.status).toBe(200);
+            expect(response.body).toEqual({
+                accessToken: mockedTokens.accessToken,
+                user: mockedUser,
+            });
+        });
+
+        it('calls signInWithGoogle with the credential from the request body', async () => {
+            vi.mocked(authService.signInWithGoogle).mockResolvedValue({
+                tokens: mockedTokens,
+                user: mockedUser,
+            });
+
+            await request(app).post('/auth/google').send(validGoogleBody);
+
+            expect(authService.signInWithGoogle).toHaveBeenCalledWith('valid-id-token');
+        });
+
+        it('sets httpOnly refreshToken cookie on success', async () => {
+            vi.mocked(authService.signInWithGoogle).mockResolvedValue({
+                tokens: mockedTokens,
+                user: mockedUser,
+            });
+
+            const response = await request(app).post('/auth/google').send(validGoogleBody);
+
+            expect(response.headers['set-cookie']).toEqual(
+                expect.arrayContaining([expect.stringContaining('refreshToken=refresh-token')])
+            );
+            expect(response.headers['set-cookie']).toEqual(
+                expect.arrayContaining([expect.stringContaining('HttpOnly')])
+            );
+        });
+
+        it('returns 401 when the Google ID token is invalid', async () => {
+            vi.mocked(authService.signInWithGoogle).mockRejectedValue(ApiError.UnauthorizedError());
+
+            const response = await request(app).post('/auth/google').send(validGoogleBody);
+
+            expect(response.status).toBe(401);
+            expect(response.body).toMatchObject({ message: 'User is not authorized' });
+        });
+
+        it('returns 500 on unexpected service error', async () => {
+            vi.spyOn(console, 'error').mockImplementationOnce(() => {});
+            vi.mocked(authService.signInWithGoogle).mockRejectedValue(new Error('DB connection lost'));
+
+            const response = await request(app).post('/auth/google').send(validGoogleBody);
+
+            expect(response.status).toBe(500);
+            expect(response.body).toEqual({ message: 'Unexpected error' });
+        });
+
+        describe('request validation', () => {
+            it('returns 400 when credential is missing', async () => {
+                const response = await request(app).post('/auth/google').send({});
+
+                expect(response.status).toBe(400);
+                expect(response.body).toHaveProperty('errors');
+                expect(authService.signInWithGoogle).not.toHaveBeenCalled();
+            });
+
+            it('returns 400 when credential is an empty string', async () => {
+                const response = await request(app).post('/auth/google').send({ credential: '' });
+
+                expect(response.status).toBe(400);
+                expect(response.body).toHaveProperty('errors');
+                expect(authService.signInWithGoogle).not.toHaveBeenCalled();
+            });
+        });
+    });
 });

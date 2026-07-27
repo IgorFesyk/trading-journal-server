@@ -35,6 +35,18 @@ export const authController = {
         }
     },
 
+    async google(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { credential } = req.body;
+            const { tokens, user } = await authService.signInWithGoogle(credential);
+
+            res.cookie('refreshToken', tokens.refreshToken, cookieOptions);
+            res.json({ accessToken: tokens.accessToken, user });
+        } catch (err) {
+            next(err);
+        }
+    },
+
     async logout(req: Request, res: Response, next: NextFunction) {
         try {
             const { refreshToken } = req.cookies;

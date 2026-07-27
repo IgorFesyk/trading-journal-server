@@ -21,10 +21,15 @@ const signinSchema = z.object({
         .max(64, 'Password must be at most 64 characters'),
 });
 
+const googleSchema = z.object({
+    credential: z.string().nonempty('Credential is required'),
+});
+
 const router: Router = Router();
 
 router.post('/sign-up', validateMiddleware(signupSchema), authController.signup);
 router.post('/sign-in', validateMiddleware(signinSchema), authController.signin);
+router.post('/google', validateMiddleware(googleSchema), authController.google);
 router.post('/logout', authController.logout);
 router.post('/refresh', authController.refresh);
 

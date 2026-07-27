@@ -8,7 +8,7 @@ A REST API backend for tracking personal trading activity. Supports multiple acc
 - **ORM:** Prisma 7
 - **Database:** PostgreSQL (Docker)
 - **Validation:** Zod
-- **Auth:** JWT — access token (15 min) + refresh token (7 days)
+- **Auth:** JWT — access token (15 min) + refresh token (7 days); Google sign-in via OIDC ID token
 - **Testing:** Vitest + supertest
 - **Linter:** ESLint + Prettier
 - **Package manager:** npm
@@ -112,3 +112,10 @@ This rebuilds the TypeScript client in `src/generated/prisma/` to reflect the ne
 - **Controllers** (`src/controllers/`) — thin HTTP layer: parse request, call service, set cookies/status, pass errors to `next(err)`.
 - **Services** (`src/services/`) — all business logic and DB access via `src/infra/prisma.ts`.
 - **Middlewares** (`src/middlewares/`).
+
+### Authentication
+
+Two ways to sign in, both ending in the same JWT access token + httpOnly refresh token cookie:
+
+- **Email/password** — `POST /auth/sign-up` / `POST /auth/sign-in`, password hashed with bcrypt.
+- **Google** — `POST /auth/google` accepts a Google ID token (the `credential` field posted by Google Identity Services' client-side button). `src/services/google.service.ts` verifies it against Google's public keys via `google-auth-library`, then `authService.signInWithGoogle` matches the user by `googleId` first, falls back to matching by verified email (auto-linking an existing password account), or creates a new user if neither matches.
