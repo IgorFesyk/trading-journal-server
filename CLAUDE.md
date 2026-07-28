@@ -45,6 +45,12 @@ docker compose up -d
 
 **Environment:** `src/env.ts` validates all env vars with Zod at startup and exits if any are missing. Required vars: `POSTGRES_URL`, `JWT_ACCESS_SECRET`, `JWT_REFRESH_SECRET`, `PORT` (default 5000).
 
+## Admin
+
+`User.role` (`ADMIN`/`USER`) gates a handful of routes via `requireAdminMiddleware`: `GET /users`, `PATCH /users/:id/role`, and the mutating `/symbols` routes (`POST`/`PUT`/`DELETE`). Deleting a `Symbol` is additionally blocked in `symbolService` if any `Trade` still references it, and symbol names must be unique (checked explicitly in `symbolService.create`, with the DB's `@unique` as a race-condition backstop).
+
+Admin-only endpoints live alongside the regular resource routes in the same Express app — there's no separate admin service. That's fine for this pet/test project; a production system with a dedicated admin surface would more likely isolate these behind a separate deployment or stricter network boundary.
+
 ## Prisma
 
 The schema is split into multiple files under `prisma/schema/`. The generated client outputs to `src/generated/prisma/` (not `node_modules`). Import from `../generated/prisma/client`, not from `@prisma/client`. Run `npm run db:generate` after any schema change.

@@ -119,3 +119,14 @@ Two ways to sign in, both ending in the same JWT access token + httpOnly refresh
 
 - **Email/password** — `POST /auth/sign-up` / `POST /auth/sign-in`, password hashed with bcrypt.
 - **Google** — `POST /auth/google` accepts a Google ID token (the `credential` field posted by Google Identity Services' client-side button). `src/services/google.service.ts` verifies it against Google's public keys via `google-auth-library`, then `authService.signInWithGoogle` matches the user by `googleId` first, falls back to matching by verified email (auto-linking an existing password account), or creates a new user if neither matches.
+
+### Admin
+
+`User.role` is either `ADMIN` or `USER`. `requireAdminMiddleware` gates:
+
+- `GET /users` / `PATCH /users/:id/role` — list all users, change a user's role.
+- `POST` / `PUT` / `DELETE /symbols` — manage the shared list of trading symbols. A symbol can't be deleted while any trade still references it, and names must be unique.
+
+The seeded `admin@tradingjournal.dev` user (see step 5 above) is the bootstrap admin; further admins are granted via `PATCH /users/:id/role` by an existing admin, or by flipping `role` directly in `npm run db:studio`.
+
+Admin endpoints live alongside the regular resource routes in this same API — there's no separate admin service. That's a fine simplification for this pet/test project; a production system with a dedicated admin surface would more likely run it as its own deployment.
