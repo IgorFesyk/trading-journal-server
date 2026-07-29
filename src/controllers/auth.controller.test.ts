@@ -1,6 +1,7 @@
 import request from 'supertest';
 
 import app from '../app';
+import { ROLE } from '../generated/prisma/enums';
 import { ApiError } from '../libs/api-error';
 import { authService } from '../services/auth.service';
 
@@ -10,6 +11,7 @@ const mockedUser = {
     id: 1,
     name: 'test',
     email: 'test@example.com',
+    role: ROLE.USER,
 };
 
 const mockedTokens = {
