@@ -15,10 +15,7 @@ const signupSchema = z.object({
 
 const signinSchema = z.object({
     email: z.email('Email must be a valid email address'),
-    password: z
-        .string('Password is required')
-        .min(8, 'Password must be at least 8 characters')
-        .max(64, 'Password must be at most 64 characters'),
+    password: z.string('Password is required'),
 });
 
 const googleSchema = z.object({
