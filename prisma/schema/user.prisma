@@ -12,6 +12,7 @@ model User {
     role      ROLE      @default(USER)
     accounts  Account[]
     token     Token?    // TODO: multiple sessions
+    mcpToken  McpToken?
     createdAt DateTime  @default(now()) @map("created_at")
     updatedAt DateTime  @default(now()) @updatedAt @map("updated_at")
 

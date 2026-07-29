@@ -11,6 +11,7 @@
 export type * from './models/Account'
 export type * from './models/Symbol'
 export type * from './models/Token'
+export type * from './models/McpToken'
 export type * from './models/Trade'
 export type * from './models/Transaction'
 export type * from './models/User'

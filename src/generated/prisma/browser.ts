@@ -33,6 +33,11 @@ export type Symbol = Prisma.SymbolModel
  */
 export type Token = Prisma.TokenModel
 /**
+ * Model McpToken
+ * 
+ */
+export type McpToken = Prisma.McpTokenModel
+/**
  * Model Trade
  * 
  */

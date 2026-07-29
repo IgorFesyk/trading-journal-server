@@ -54,6 +54,7 @@ export const ModelName = {
   Account: 'Account',
   Symbol: 'Symbol',
   Token: 'Token',
+  McpToken: 'McpToken',
   Trade: 'Trade',
   Transaction: 'Transaction',
   User: 'User'
@@ -101,10 +102,22 @@ export type SymbolScalarFieldEnum = (typeof SymbolScalarFieldEnum)[keyof typeof 
 
 export const TokenScalarFieldEnum = {
   userId: 'userId',
-  refreshToken: 'refreshToken'
+  refreshToken: 'refreshToken',
+  createdAt: 'createdAt',
+  lastUsedAt: 'lastUsedAt'
 } as const
 
 export type TokenScalarFieldEnum = (typeof TokenScalarFieldEnum)[keyof typeof TokenScalarFieldEnum]
+
+
+export const McpTokenScalarFieldEnum = {
+  userId: 'userId',
+  tokenHash: 'tokenHash',
+  createdAt: 'createdAt',
+  lastUsedAt: 'lastUsedAt'
+} as const
+
+export type McpTokenScalarFieldEnum = (typeof McpTokenScalarFieldEnum)[keyof typeof McpTokenScalarFieldEnum]
 
 
 export const TradeScalarFieldEnum = {

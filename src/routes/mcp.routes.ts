@@ -1,12 +1,18 @@
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import { Request, Response, Router } from 'express';
 
+import { mcpController } from '../controllers/mcp.controller';
+import { createMcpServer } from '../mcp/mcp.server';
 import { authMiddleware } from '../middlewares/auth.middleware';
-import { createMcpServer } from './mcp.server';
+import { mcpAuthMiddleware } from '../middlewares/mcp-auth.middleware';
 
 const router: Router = Router();
 
-router.post('/', authMiddleware, async (req: Request, res: Response) => {
+router.get('/token', authMiddleware, mcpController.getTokenStatus);
+router.post('/token', authMiddleware, mcpController.generateToken);
+router.delete('/token', authMiddleware, mcpController.revokeToken);
+
+router.post('/', mcpAuthMiddleware, async (req: Request, res: Response) => {
     const server = createMcpServer(req.user.id);
     const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined });
 

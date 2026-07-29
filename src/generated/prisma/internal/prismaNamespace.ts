@@ -387,6 +387,7 @@ export const ModelName = {
   Account: 'Account',
   Symbol: 'Symbol',
   Token: 'Token',
+  McpToken: 'McpToken',
   Trade: 'Trade',
   Transaction: 'Transaction',
   User: 'User'
@@ -405,7 +406,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "account" | "symbol" | "token" | "trade" | "transaction" | "user"
+    modelProps: "account" | "symbol" | "token" | "mcpToken" | "trade" | "transaction" | "user"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -628,6 +629,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.TokenCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.TokenCountAggregateOutputType> | number
+        }
+      }
+    }
+    McpToken: {
+      payload: Prisma.$McpTokenPayload<ExtArgs>
+      fields: Prisma.McpTokenFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.McpTokenFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$McpTokenPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.McpTokenFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$McpTokenPayload>
+        }
+        findFirst: {
+          args: Prisma.McpTokenFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$McpTokenPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.McpTokenFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$McpTokenPayload>
+        }
+        findMany: {
+          args: Prisma.McpTokenFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$McpTokenPayload>[]
+        }
+        create: {
+          args: Prisma.McpTokenCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$McpTokenPayload>
+        }
+        createMany: {
+          args: Prisma.McpTokenCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.McpTokenCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$McpTokenPayload>[]
+        }
+        delete: {
+          args: Prisma.McpTokenDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$McpTokenPayload>
+        }
+        update: {
+          args: Prisma.McpTokenUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$McpTokenPayload>
+        }
+        deleteMany: {
+          args: Prisma.McpTokenDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.McpTokenUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.McpTokenUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$McpTokenPayload>[]
+        }
+        upsert: {
+          args: Prisma.McpTokenUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$McpTokenPayload>
+        }
+        aggregate: {
+          args: Prisma.McpTokenAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMcpToken>
+        }
+        groupBy: {
+          args: Prisma.McpTokenGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.McpTokenGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.McpTokenCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.McpTokenCountAggregateOutputType> | number
         }
       }
     }
@@ -918,10 +993,22 @@ export type SymbolScalarFieldEnum = (typeof SymbolScalarFieldEnum)[keyof typeof 
 
 export const TokenScalarFieldEnum = {
   userId: 'userId',
-  refreshToken: 'refreshToken'
+  refreshToken: 'refreshToken',
+  createdAt: 'createdAt',
+  lastUsedAt: 'lastUsedAt'
 } as const
 
 export type TokenScalarFieldEnum = (typeof TokenScalarFieldEnum)[keyof typeof TokenScalarFieldEnum]
+
+
+export const McpTokenScalarFieldEnum = {
+  userId: 'userId',
+  tokenHash: 'tokenHash',
+  createdAt: 'createdAt',
+  lastUsedAt: 'lastUsedAt'
+} as const
+
+export type McpTokenScalarFieldEnum = (typeof McpTokenScalarFieldEnum)[keyof typeof McpTokenScalarFieldEnum]
 
 
 export const TradeScalarFieldEnum = {
@@ -1297,6 +1384,7 @@ export type GlobalOmitConfig = {
   account?: Prisma.AccountOmit
   symbol?: Prisma.SymbolOmit
   token?: Prisma.TokenOmit
+  mcpToken?: Prisma.McpTokenOmit
   trade?: Prisma.TradeOmit
   transaction?: Prisma.TransactionOmit
   user?: Prisma.UserOmit

@@ -4,10 +4,10 @@ import express, { Express } from 'express';
 import rateLimit from 'express-rate-limit';
 
 import { env } from './env';
-import mcpRoutes from './mcp/mcp.routes';
 import { errorMiddleware } from './middlewares/error.middleware';
 import accountRoutes from './routes/account.routes';
 import authRoutes from './routes/auth.routes';
+import mcpRoutes from './routes/mcp.routes';
 import symbolRoutes from './routes/symbol.routes';
 import userRoutes from './routes/user.routes';
 import versionRoutes from './routes/version.routes';

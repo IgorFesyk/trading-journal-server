@@ -242,6 +242,7 @@ export type UserWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   accounts?: Prisma.AccountListRelationFilter
   token?: Prisma.XOR<Prisma.TokenNullableScalarRelationFilter, Prisma.TokenWhereInput> | null
+  mcpToken?: Prisma.XOR<Prisma.McpTokenNullableScalarRelationFilter, Prisma.McpTokenWhereInput> | null
 }
 
 export type UserOrderByWithRelationInput = {
@@ -255,6 +256,7 @@ export type UserOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   accounts?: Prisma.AccountOrderByRelationAggregateInput
   token?: Prisma.TokenOrderByWithRelationInput
+  mcpToken?: Prisma.McpTokenOrderByWithRelationInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -271,6 +273,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   accounts?: Prisma.AccountListRelationFilter
   token?: Prisma.XOR<Prisma.TokenNullableScalarRelationFilter, Prisma.TokenWhereInput> | null
+  mcpToken?: Prisma.XOR<Prisma.McpTokenNullableScalarRelationFilter, Prisma.McpTokenWhereInput> | null
 }, "id" | "email" | "googleId">
 
 export type UserOrderByWithAggregationInput = {
@@ -313,6 +316,7 @@ export type UserCreateInput = {
   updatedAt?: Date | string
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   token?: Prisma.TokenCreateNestedOneWithoutUserInput
+  mcpToken?: Prisma.McpTokenCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -326,6 +330,7 @@ export type UserUncheckedCreateInput = {
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   token?: Prisma.TokenUncheckedCreateNestedOneWithoutUserInput
+  mcpToken?: Prisma.McpTokenUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -338,6 +343,7 @@ export type UserUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   token?: Prisma.TokenUpdateOneWithoutUserNestedInput
+  mcpToken?: Prisma.McpTokenUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -351,6 +357,7 @@ export type UserUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   token?: Prisma.TokenUncheckedUpdateOneWithoutUserNestedInput
+  mcpToken?: Prisma.McpTokenUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -459,6 +466,20 @@ export type UserUpdateOneRequiredWithoutTokenNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTokenInput, Prisma.UserUpdateWithoutTokenInput>, Prisma.UserUncheckedUpdateWithoutTokenInput>
 }
 
+export type UserCreateNestedOneWithoutMcpTokenInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMcpTokenInput, Prisma.UserUncheckedCreateWithoutMcpTokenInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMcpTokenInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutMcpTokenNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMcpTokenInput, Prisma.UserUncheckedCreateWithoutMcpTokenInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMcpTokenInput
+  upsert?: Prisma.UserUpsertWithoutMcpTokenInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMcpTokenInput, Prisma.UserUpdateWithoutMcpTokenInput>, Prisma.UserUncheckedUpdateWithoutMcpTokenInput>
+}
+
 export type EnumROLEFieldUpdateOperationsInput = {
   set?: $Enums.ROLE
 }
@@ -472,6 +493,7 @@ export type UserCreateWithoutAccountsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   token?: Prisma.TokenCreateNestedOneWithoutUserInput
+  mcpToken?: Prisma.McpTokenCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -484,6 +506,7 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   token?: Prisma.TokenUncheckedCreateNestedOneWithoutUserInput
+  mcpToken?: Prisma.McpTokenUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -511,6 +534,7 @@ export type UserUpdateWithoutAccountsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   token?: Prisma.TokenUpdateOneWithoutUserNestedInput
+  mcpToken?: Prisma.McpTokenUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -523,6 +547,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   token?: Prisma.TokenUncheckedUpdateOneWithoutUserNestedInput
+  mcpToken?: Prisma.McpTokenUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTokenInput = {
@@ -534,6 +559,7 @@ export type UserCreateWithoutTokenInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  mcpToken?: Prisma.McpTokenCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTokenInput = {
@@ -546,6 +572,7 @@ export type UserUncheckedCreateWithoutTokenInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  mcpToken?: Prisma.McpTokenUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTokenInput = {
@@ -573,6 +600,7 @@ export type UserUpdateWithoutTokenInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  mcpToken?: Prisma.McpTokenUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTokenInput = {
@@ -585,6 +613,73 @@ export type UserUncheckedUpdateWithoutTokenInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  mcpToken?: Prisma.McpTokenUncheckedUpdateOneWithoutUserNestedInput
+}
+
+export type UserCreateWithoutMcpTokenInput = {
+  name: string
+  email: string
+  password?: string | null
+  googleId?: string | null
+  role?: $Enums.ROLE
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  token?: Prisma.TokenCreateNestedOneWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutMcpTokenInput = {
+  id?: number
+  name: string
+  email: string
+  password?: string | null
+  googleId?: string | null
+  role?: $Enums.ROLE
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  token?: Prisma.TokenUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutMcpTokenInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutMcpTokenInput, Prisma.UserUncheckedCreateWithoutMcpTokenInput>
+}
+
+export type UserUpsertWithoutMcpTokenInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutMcpTokenInput, Prisma.UserUncheckedUpdateWithoutMcpTokenInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutMcpTokenInput, Prisma.UserUncheckedCreateWithoutMcpTokenInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutMcpTokenInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutMcpTokenInput, Prisma.UserUncheckedUpdateWithoutMcpTokenInput>
+}
+
+export type UserUpdateWithoutMcpTokenInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumROLEFieldUpdateOperationsInput | $Enums.ROLE
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  token?: Prisma.TokenUpdateOneWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutMcpTokenInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumROLEFieldUpdateOperationsInput | $Enums.ROLE
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  token?: Prisma.TokenUncheckedUpdateOneWithoutUserNestedInput
 }
 
 
@@ -629,6 +724,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedAt?: boolean
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   token?: boolean | Prisma.User$tokenArgs<ExtArgs>
+  mcpToken?: boolean | Prisma.User$mcpTokenArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -669,6 +765,7 @@ export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   token?: boolean | Prisma.User$tokenArgs<ExtArgs>
+  mcpToken?: boolean | Prisma.User$mcpTokenArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -679,6 +776,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     accounts: Prisma.$AccountPayload<ExtArgs>[]
     token: Prisma.$TokenPayload<ExtArgs> | null
+    mcpToken: Prisma.$McpTokenPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1085,6 +1183,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   accounts<T extends Prisma.User$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   token<T extends Prisma.User$tokenArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$tokenArgs<ExtArgs>>): Prisma.Prisma__TokenClient<runtime.Types.Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  mcpToken<T extends Prisma.User$mcpTokenArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$mcpTokenArgs<ExtArgs>>): Prisma.Prisma__McpTokenClient<runtime.Types.Result.GetResult<Prisma.$McpTokenPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1555,6 +1654,25 @@ export type User$tokenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   include?: Prisma.TokenInclude<ExtArgs> | null
   where?: Prisma.TokenWhereInput
+}
+
+/**
+ * User.mcpToken
+ */
+export type User$mcpTokenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the McpToken
+   */
+  select?: Prisma.McpTokenSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the McpToken
+   */
+  omit?: Prisma.McpTokenOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.McpTokenInclude<ExtArgs> | null
+  where?: Prisma.McpTokenWhereInput
 }
 
 /**
