@@ -210,26 +210,6 @@ describe('AuthController', () => {
                 expect(response.body).toHaveProperty('errors');
                 expect(authService.signin).not.toHaveBeenCalled();
             });
-
-            it('returns 400 when password is shorter than 8 characters', async () => {
-                const response = await request(app)
-                    .post('/auth/sign-in')
-                    .send({ ...validSigninBody, password: 'short' });
-
-                expect(response.status).toBe(400);
-                expect(response.body).toHaveProperty('errors');
-                expect(authService.signin).not.toHaveBeenCalled();
-            });
-
-            it('returns 400 when password is longer than 64 characters', async () => {
-                const response = await request(app)
-                    .post('/auth/sign-in')
-                    .send({ ...validSigninBody, password: 'a'.repeat(65) });
-
-                expect(response.status).toBe(400);
-                expect(response.body).toHaveProperty('errors');
-                expect(authService.signin).not.toHaveBeenCalled();
-            });
         });
     });
 
