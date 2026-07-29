@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 
+import { ROLE } from '../generated/prisma/enums';
 import { prisma } from '../infra/prisma';
 import { ApiError } from '../libs/api-error';
 import { googleService } from './google.service';
@@ -9,6 +10,7 @@ type User = {
     id: number;
     email: string;
     name: string;
+    role: ROLE;
 };
 
 type AuthResult = {
@@ -42,7 +44,7 @@ export const authService = {
 
         return {
             tokens,
-            user: { id: user.id, email: user.email, name: user.name },
+            user: { id: user.id, email: user.email, name: user.name, role: user.role },
         };
     },
 
@@ -71,7 +73,7 @@ export const authService = {
 
         return {
             tokens,
-            user: { id: user.id, name: user.name, email: user.email },
+            user: { id: user.id, name: user.name, email: user.email, role: user.role },
         };
     },
 
@@ -96,7 +98,7 @@ export const authService = {
         });
         await tokenService.saveToken(user.id, tokens.refreshToken);
 
-        return { tokens, user: { id: user.id, name: user.name, email: user.email } };
+        return { tokens, user: { id: user.id, name: user.name, email: user.email, role: user.role } };
     },
 
     async logout(refreshToken: string) {
@@ -137,7 +139,7 @@ export const authService = {
 
         return {
             tokens,
-            user: { id: user.id, email: user.email, name: user.name },
+            user: { id: user.id, email: user.email, name: user.name, role: user.role },
         };
     },
 };

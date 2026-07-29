@@ -130,3 +130,9 @@ Two ways to sign in, both ending in the same JWT access token + httpOnly refresh
 The seeded `admin@tradingjournal.dev` user (see step 5 above) is the bootstrap admin; further admins are granted via `PATCH /users/:id/role` by an existing admin, or by flipping `role` directly in `npm run db:studio`.
 
 Admin endpoints live alongside the regular resource routes in this same API — there's no separate admin service. That's a fine simplification for this pet/test project; a production system with a dedicated admin surface would more likely run it as its own deployment.
+
+### MCP server
+
+`POST /mcp` exposes the app's data to AI tools (e.g. Claude) over the Model Context Protocol, using `@modelcontextprotocol/sdk`'s Streamable HTTP transport. Auth is a separate long-lived token (not the JWT access token) — generate/inspect/revoke it via `GET`/`POST`/`DELETE /mcp/token` (JWT-authenticated), then pass it as `Authorization: Bearer <token>` on `/mcp` requests, checked by `mcpAuthMiddleware`.
+
+`src/mcp/mcp.server.ts` also registers a `weekly_review` prompt: given an `accountId`, it fetches that account's trades from the last 7 days and returns a pre-filled message asking the model to summarize win rate, biggest winners/losers, and patterns in the trade notes.
