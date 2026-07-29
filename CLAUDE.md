@@ -63,6 +63,8 @@ Tests use Vitest + supertest against the real Express app. Services are mocked w
 
 Test files live alongside the code they test (`*.controller.test.ts`).
 
+**Live server calls require permission:** Never call this server's real endpoints directly — `curl`, `fetch`, a Playwright/browser script driving the client, Postman, etc. — even against `localhost`, without asking the user first. If they approve it for one-off verification, clean up any data it created (delete the test users/rows) before finishing; don't leave throwaway records for the user to discover later.
+
 ## Conventions
 
 **No `any`:** Never use `any`. Use proper types, or `unknown` when the type is genuinely unknown and must be narrowed before use.
