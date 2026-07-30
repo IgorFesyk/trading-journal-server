@@ -21,8 +21,14 @@ type AuthResult = {
     };
 };
 
+function normalizeEmail(email: string): string {
+    return email.toLowerCase();
+}
+
 export const authService = {
     async signup(name: string, email: string, password: string): Promise<AuthResult> {
+        email = normalizeEmail(email);
+
         const existing = await prisma.user.findUnique({ where: { email } });
         if (existing) {
             throw ApiError.BadRequest('Sign up failed');
@@ -49,6 +55,8 @@ export const authService = {
     },
 
     async signin(email: string, password: string): Promise<AuthResult> {
+        email = normalizeEmail(email);
+
         const user = await prisma.user.findUnique({ where: { email } });
         if (!user) {
             throw ApiError.BadRequest('Invalid credentials');
@@ -79,14 +87,16 @@ export const authService = {
 
     async signInWithGoogle(idToken: string): Promise<AuthResult> {
         const profile = await googleService.verifyIdToken(idToken);
+        const email = normalizeEmail(profile.email);
+
         let user = await prisma.user.findUnique({ where: { googleId: profile.googleId } });
 
         if (!user) {
-            const existing = await prisma.user.findUnique({ where: { email: profile.email } });
+            const existing = await prisma.user.findUnique({ where: { email } });
             user = existing
                 ? await prisma.user.update({ where: { id: existing.id }, data: { googleId: profile.googleId } })
                 : await prisma.user.create({
-                      data: { name: profile.name, email: profile.email, googleId: profile.googleId },
+                      data: { name: profile.name, email, googleId: profile.googleId },
                   });
         }
 

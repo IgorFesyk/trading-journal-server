@@ -26,6 +26,7 @@ const mockedSymbol = {
     id: 1,
     name: 'EUR/USD',
     category: 'FOREX' as const,
+    published: true,
     tradeCount: 12,
 };
 
@@ -53,7 +54,16 @@ describe('SymbolController', () => {
 
             await request(app).get('/symbols?category=FOREX').set('Authorization', `Bearer ${VALID_TOKEN}`);
 
-            expect(symbolService.findAll).toHaveBeenCalledWith('FOREX');
+            expect(symbolService.findAll).toHaveBeenCalledWith('FOREX', undefined);
+        });
+
+        it('passes the published query param through to findAll', async () => {
+            vi.mocked(tokenService.validateAccessToken).mockReturnValue(mockedTokenPayload);
+            vi.mocked(symbolService.findAll).mockResolvedValue([mockedSymbol]);
+
+            await request(app).get('/symbols?published=false').set('Authorization', `Bearer ${VALID_TOKEN}`);
+
+            expect(symbolService.findAll).toHaveBeenCalledWith(undefined, false);
         });
 
         it('returns 401 when Authorization header is missing', async () => {
@@ -88,7 +98,12 @@ describe('SymbolController', () => {
     describe('POST /symbols', () => {
         it('returns 201 with the created symbol when caller is an admin', async () => {
             vi.mocked(tokenService.validateAccessToken).mockReturnValue(mockedAdminTokenPayload);
-            vi.mocked(symbolService.create).mockResolvedValue({ id: 1, name: 'GER40', category: 'INDICES' });
+            vi.mocked(symbolService.create).mockResolvedValue({
+                id: 1,
+                name: 'GER40',
+                category: 'INDICES',
+                published: true,
+            });
 
             const response = await request(app)
                 .post('/symbols')
@@ -130,7 +145,12 @@ describe('SymbolController', () => {
     describe('DELETE /symbols/:id', () => {
         it('returns 204 when caller is an admin and deletion succeeds', async () => {
             vi.mocked(tokenService.validateAccessToken).mockReturnValue(mockedAdminTokenPayload);
-            vi.mocked(symbolService.delete).mockResolvedValue({ id: 1, name: 'EUR/USD', category: 'FOREX' });
+            vi.mocked(symbolService.delete).mockResolvedValue({
+                id: 1,
+                name: 'EUR/USD',
+                category: 'FOREX',
+                published: true,
+            });
 
             const response = await request(app).delete('/symbols/1').set('Authorization', `Bearer ${VALID_TOKEN}`);
 

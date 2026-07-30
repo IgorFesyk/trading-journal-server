@@ -5,17 +5,20 @@ import { ApiError } from '../libs/api-error';
 type CreateSymbolInput = {
     name: string;
     category: CATEGORY;
+    published?: boolean;
 };
 
 type UpdateSymbolInput = {
     name?: string;
     category?: CATEGORY;
+    published?: boolean;
 };
 
 type SymbolWithTradeCount = {
     id: number;
     name: string;
     category: CATEGORY;
+    published: boolean;
     tradeCount: number;
 };
 
@@ -33,9 +36,12 @@ export const symbolService = {
         return prisma.symbol.findUnique({ where: { id } });
     },
 
-    async findAll(category?: CATEGORY): Promise<SymbolWithTradeCount[]> {
+    async findAll(category?: CATEGORY, published?: boolean): Promise<SymbolWithTradeCount[]> {
         const symbols = await prisma.symbol.findMany({
-            where: category ? { category } : undefined,
+            where: {
+                ...(category && { category }),
+                ...(published !== undefined && { published }),
+            },
             orderBy: { name: 'asc' },
             include: { _count: { select: { trades: true } } },
         });

@@ -38,18 +38,21 @@ export type SymbolMinAggregateOutputType = {
   id: number | null
   name: string | null
   category: $Enums.CATEGORY | null
+  published: boolean | null
 }
 
 export type SymbolMaxAggregateOutputType = {
   id: number | null
   name: string | null
   category: $Enums.CATEGORY | null
+  published: boolean | null
 }
 
 export type SymbolCountAggregateOutputType = {
   id: number
   name: number
   category: number
+  published: number
   _all: number
 }
 
@@ -66,18 +69,21 @@ export type SymbolMinAggregateInputType = {
   id?: true
   name?: true
   category?: true
+  published?: true
 }
 
 export type SymbolMaxAggregateInputType = {
   id?: true
   name?: true
   category?: true
+  published?: true
 }
 
 export type SymbolCountAggregateInputType = {
   id?: true
   name?: true
   category?: true
+  published?: true
   _all?: true
 }
 
@@ -171,6 +177,7 @@ export type SymbolGroupByOutputType = {
   id: number
   name: string
   category: $Enums.CATEGORY
+  published: boolean
   _count: SymbolCountAggregateOutputType | null
   _avg: SymbolAvgAggregateOutputType | null
   _sum: SymbolSumAggregateOutputType | null
@@ -200,6 +207,7 @@ export type SymbolWhereInput = {
   id?: Prisma.IntFilter<"Symbol"> | number
   name?: Prisma.StringFilter<"Symbol"> | string
   category?: Prisma.EnumCATEGORYFilter<"Symbol"> | $Enums.CATEGORY
+  published?: Prisma.BoolFilter<"Symbol"> | boolean
   trades?: Prisma.TradeListRelationFilter
 }
 
@@ -207,6 +215,7 @@ export type SymbolOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   category?: Prisma.SortOrder
+  published?: Prisma.SortOrder
   trades?: Prisma.TradeOrderByRelationAggregateInput
 }
 
@@ -217,6 +226,7 @@ export type SymbolWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.SymbolWhereInput[]
   NOT?: Prisma.SymbolWhereInput | Prisma.SymbolWhereInput[]
   category?: Prisma.EnumCATEGORYFilter<"Symbol"> | $Enums.CATEGORY
+  published?: Prisma.BoolFilter<"Symbol"> | boolean
   trades?: Prisma.TradeListRelationFilter
 }, "id" | "name">
 
@@ -224,6 +234,7 @@ export type SymbolOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   category?: Prisma.SortOrder
+  published?: Prisma.SortOrder
   _count?: Prisma.SymbolCountOrderByAggregateInput
   _avg?: Prisma.SymbolAvgOrderByAggregateInput
   _max?: Prisma.SymbolMaxOrderByAggregateInput
@@ -238,11 +249,13 @@ export type SymbolScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"Symbol"> | number
   name?: Prisma.StringWithAggregatesFilter<"Symbol"> | string
   category?: Prisma.EnumCATEGORYWithAggregatesFilter<"Symbol"> | $Enums.CATEGORY
+  published?: Prisma.BoolWithAggregatesFilter<"Symbol"> | boolean
 }
 
 export type SymbolCreateInput = {
   name: string
   category: $Enums.CATEGORY
+  published?: boolean
   trades?: Prisma.TradeCreateNestedManyWithoutSymbolInput
 }
 
@@ -250,12 +263,14 @@ export type SymbolUncheckedCreateInput = {
   id?: number
   name: string
   category: $Enums.CATEGORY
+  published?: boolean
   trades?: Prisma.TradeUncheckedCreateNestedManyWithoutSymbolInput
 }
 
 export type SymbolUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.EnumCATEGORYFieldUpdateOperationsInput | $Enums.CATEGORY
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
   trades?: Prisma.TradeUpdateManyWithoutSymbolNestedInput
 }
 
@@ -263,6 +278,7 @@ export type SymbolUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.EnumCATEGORYFieldUpdateOperationsInput | $Enums.CATEGORY
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
   trades?: Prisma.TradeUncheckedUpdateManyWithoutSymbolNestedInput
 }
 
@@ -270,23 +286,27 @@ export type SymbolCreateManyInput = {
   id?: number
   name: string
   category: $Enums.CATEGORY
+  published?: boolean
 }
 
 export type SymbolUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.EnumCATEGORYFieldUpdateOperationsInput | $Enums.CATEGORY
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type SymbolUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.EnumCATEGORYFieldUpdateOperationsInput | $Enums.CATEGORY
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type SymbolCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   category?: Prisma.SortOrder
+  published?: Prisma.SortOrder
 }
 
 export type SymbolAvgOrderByAggregateInput = {
@@ -297,12 +317,14 @@ export type SymbolMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   category?: Prisma.SortOrder
+  published?: Prisma.SortOrder
 }
 
 export type SymbolMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   category?: Prisma.SortOrder
+  published?: Prisma.SortOrder
 }
 
 export type SymbolSumOrderByAggregateInput = {
@@ -316,6 +338,10 @@ export type SymbolScalarRelationFilter = {
 
 export type EnumCATEGORYFieldUpdateOperationsInput = {
   set?: $Enums.CATEGORY
+}
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
 }
 
 export type SymbolCreateNestedOneWithoutTradesInput = {
@@ -335,12 +361,14 @@ export type SymbolUpdateOneRequiredWithoutTradesNestedInput = {
 export type SymbolCreateWithoutTradesInput = {
   name: string
   category: $Enums.CATEGORY
+  published?: boolean
 }
 
 export type SymbolUncheckedCreateWithoutTradesInput = {
   id?: number
   name: string
   category: $Enums.CATEGORY
+  published?: boolean
 }
 
 export type SymbolCreateOrConnectWithoutTradesInput = {
@@ -362,12 +390,14 @@ export type SymbolUpdateToOneWithWhereWithoutTradesInput = {
 export type SymbolUpdateWithoutTradesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.EnumCATEGORYFieldUpdateOperationsInput | $Enums.CATEGORY
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type SymbolUncheckedUpdateWithoutTradesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.EnumCATEGORYFieldUpdateOperationsInput | $Enums.CATEGORY
+  published?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
@@ -405,6 +435,7 @@ export type SymbolSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   id?: boolean
   name?: boolean
   category?: boolean
+  published?: boolean
   trades?: boolean | Prisma.Symbol$tradesArgs<ExtArgs>
   _count?: boolean | Prisma.SymbolCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["symbol"]>
@@ -413,21 +444,24 @@ export type SymbolSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   id?: boolean
   name?: boolean
   category?: boolean
+  published?: boolean
 }, ExtArgs["result"]["symbol"]>
 
 export type SymbolSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
   category?: boolean
+  published?: boolean
 }, ExtArgs["result"]["symbol"]>
 
 export type SymbolSelectScalar = {
   id?: boolean
   name?: boolean
   category?: boolean
+  published?: boolean
 }
 
-export type SymbolOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "category", ExtArgs["result"]["symbol"]>
+export type SymbolOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "category" | "published", ExtArgs["result"]["symbol"]>
 export type SymbolInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   trades?: boolean | Prisma.Symbol$tradesArgs<ExtArgs>
   _count?: boolean | Prisma.SymbolCountOutputTypeDefaultArgs<ExtArgs>
@@ -444,6 +478,7 @@ export type $SymbolPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     id: number
     name: string
     category: $Enums.CATEGORY
+    published: boolean
   }, ExtArgs["result"]["symbol"]>
   composites: {}
 }
@@ -871,6 +906,7 @@ export interface SymbolFieldRefs {
   readonly id: Prisma.FieldRef<"Symbol", 'Int'>
   readonly name: Prisma.FieldRef<"Symbol", 'String'>
   readonly category: Prisma.FieldRef<"Symbol", 'CATEGORY'>
+  readonly published: Prisma.FieldRef<"Symbol", 'Boolean'>
 }
     
 

@@ -94,7 +94,8 @@ export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeo
 export const SymbolScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  category: 'category'
+  category: 'category',
+  published: 'published'
 } as const
 
 export type SymbolScalarFieldEnum = (typeof SymbolScalarFieldEnum)[keyof typeof SymbolScalarFieldEnum]

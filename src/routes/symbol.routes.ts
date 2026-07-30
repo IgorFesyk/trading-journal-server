@@ -10,12 +10,14 @@ import { validateMiddleware } from '../middlewares/validate.middleware';
 const createSymbolSchema = z.object({
     name: z.string().min(1, 'Name is required'),
     category: z.enum(CATEGORY),
+    published: z.boolean().optional(),
 });
 
 const updateSymbolSchema = createSymbolSchema.partial();
 
 const getSymbolsQuerySchema = z.object({
     category: z.enum(CATEGORY).optional(),
+    published: z.stringbool().optional(),
 });
 
 const router: Router = Router();

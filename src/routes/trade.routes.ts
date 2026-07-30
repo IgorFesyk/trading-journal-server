@@ -8,7 +8,7 @@ import { validateMiddleware } from '../middlewares/validate.middleware';
 
 const createTradeSchema = z.object({
     symbolId: z.coerce.number().int().positive(),
-    risk: z.coerce.number().int().positive(),
+    risk: z.coerce.number().int().positive().max(10000, 'Risk cannot exceed 100%'),
     direction: z.enum(DIRECTION),
     entryTF: z.enum(TIMEFRAME),
     setup: z.enum(EXECUTION_SETUP),

@@ -6,14 +6,29 @@ import { TRANSACTION_TYPE } from '../generated/prisma/enums';
 import { authMiddleware } from '../middlewares/auth.middleware';
 import { validateMiddleware } from '../middlewares/validate.middleware';
 
-const createTransactionSchema = z.object({
+const transactionShapeSchema = z.object({
     type: z.enum(TRANSACTION_TYPE),
-    amount: z.coerce.number().int().positive(),
+    amount: z.coerce.number().int(),
     occurredAt: z.coerce.date(),
     note: z.string().max(1000).optional(),
 });
 
-const updateTransactionSchema = createTransactionSchema.partial();
+function validateAmountSign(data: { type?: TRANSACTION_TYPE; amount?: number }, ctx: z.RefinementCtx) {
+    if (data.type === undefined || data.amount === undefined) return;
+
+    if (data.type === 'DEPOSIT' && data.amount <= 0) {
+        ctx.addIssue({ code: 'custom', path: ['amount'], message: 'Amount must be positive for a deposit' });
+    }
+    if (data.type === 'WITHDRAWAL' && data.amount >= 0) {
+        ctx.addIssue({ code: 'custom', path: ['amount'], message: 'Amount must be negative for a withdrawal' });
+    }
+    if (data.type === 'ADJUSTMENT' && data.amount === 0) {
+        ctx.addIssue({ code: 'custom', path: ['amount'], message: 'Amount cannot be zero' });
+    }
+}
+
+const createTransactionSchema = transactionShapeSchema.superRefine(validateAmountSign);
+const updateTransactionSchema = transactionShapeSchema.partial().superRefine(validateAmountSign);
 
 const getTransactionsQuerySchema = z.object({
     type: z.enum(TRANSACTION_TYPE).optional(),

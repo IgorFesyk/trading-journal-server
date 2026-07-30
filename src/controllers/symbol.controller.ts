@@ -15,12 +15,12 @@ export const symbolController = {
     },
 
     async getAll(
-        req: Request<Record<string, never>, unknown, unknown, { category?: CATEGORY }>,
+        req: Request<Record<string, never>, unknown, unknown, { category?: CATEGORY; published?: boolean }>,
         res: Response,
         next: NextFunction
     ) {
         try {
-            const symbols = await symbolService.findAll(req.query.category);
+            const symbols = await symbolService.findAll(req.query.category, req.query.published);
 
             res.json(symbols);
         } catch (err) {

@@ -24,6 +24,10 @@ export const tradeService = {
         const account = await prisma.account.findFirst({ where: { id: data.accountId, userId } });
         if (!account) throw ApiError.NotFound('Account not found');
 
+        const symbol = await prisma.symbol.findUnique({ where: { id: data.symbolId } });
+        if (!symbol) throw ApiError.NotFound('Symbol not found');
+        if (!symbol.published) throw ApiError.BadRequest('This symbol is not available for new trades');
+
         return prisma.trade.create({ data });
     },
 

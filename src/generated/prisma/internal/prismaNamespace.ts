@@ -985,7 +985,8 @@ export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeo
 export const SymbolScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  category: 'category'
+  category: 'category',
+  published: 'published'
 } as const
 
 export type SymbolScalarFieldEnum = (typeof SymbolScalarFieldEnum)[keyof typeof SymbolScalarFieldEnum]
@@ -1171,6 +1172,13 @@ export type EnumCATEGORYFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
  * Reference to a field of type 'CATEGORY[]'
  */
 export type ListEnumCATEGORYFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CATEGORY[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 

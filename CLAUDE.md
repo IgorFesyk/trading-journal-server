@@ -72,5 +72,3 @@ Test files live alongside the code they test (`*.controller.test.ts`).
 **No type assertions (`as`):** Avoid `as SomeType` casts. Prefer typing variables and function signatures correctly so assertions are unnecessary. Use assertions only as a last resort when TypeScript cannot infer the type and there is no better alternative.
 
 **README.md:** Update `README.md` whenever you change the architecture, add/remove a major library.
-
-**Package version:** Bump the `version` field in `package.json` on every change (patch for fixes/minor additions, minor for new flows or features, major for breaking changes).
