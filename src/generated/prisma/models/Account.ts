@@ -30,24 +30,20 @@ export type AccountAvgAggregateOutputType = {
   id: number | null
   userId: number | null
   startingEquity: number | null
-  targetEquity: number | null
 }
 
 export type AccountSumAggregateOutputType = {
   id: number | null
   userId: number | null
   startingEquity: number | null
-  targetEquity: number | null
 }
 
 export type AccountMinAggregateOutputType = {
   id: number | null
   userId: number | null
   name: string | null
-  type: $Enums.ACCOUNT_TYPE | null
   currency: $Enums.CURRENCY | null
   startingEquity: number | null
-  targetEquity: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -56,10 +52,8 @@ export type AccountMaxAggregateOutputType = {
   id: number | null
   userId: number | null
   name: string | null
-  type: $Enums.ACCOUNT_TYPE | null
   currency: $Enums.CURRENCY | null
   startingEquity: number | null
-  targetEquity: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -68,10 +62,8 @@ export type AccountCountAggregateOutputType = {
   id: number
   userId: number
   name: number
-  type: number
   currency: number
   startingEquity: number
-  targetEquity: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -82,24 +74,20 @@ export type AccountAvgAggregateInputType = {
   id?: true
   userId?: true
   startingEquity?: true
-  targetEquity?: true
 }
 
 export type AccountSumAggregateInputType = {
   id?: true
   userId?: true
   startingEquity?: true
-  targetEquity?: true
 }
 
 export type AccountMinAggregateInputType = {
   id?: true
   userId?: true
   name?: true
-  type?: true
   currency?: true
   startingEquity?: true
-  targetEquity?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -108,10 +96,8 @@ export type AccountMaxAggregateInputType = {
   id?: true
   userId?: true
   name?: true
-  type?: true
   currency?: true
   startingEquity?: true
-  targetEquity?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -120,10 +106,8 @@ export type AccountCountAggregateInputType = {
   id?: true
   userId?: true
   name?: true
-  type?: true
   currency?: true
   startingEquity?: true
-  targetEquity?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -219,10 +203,8 @@ export type AccountGroupByOutputType = {
   id: number
   userId: number
   name: string
-  type: $Enums.ACCOUNT_TYPE
   currency: $Enums.CURRENCY
   startingEquity: number
-  targetEquity: number | null
   createdAt: Date
   updatedAt: Date
   _count: AccountCountAggregateOutputType | null
@@ -254,10 +236,8 @@ export type AccountWhereInput = {
   id?: Prisma.IntFilter<"Account"> | number
   userId?: Prisma.IntFilter<"Account"> | number
   name?: Prisma.StringFilter<"Account"> | string
-  type?: Prisma.EnumACCOUNT_TYPEFilter<"Account"> | $Enums.ACCOUNT_TYPE
   currency?: Prisma.EnumCURRENCYFilter<"Account"> | $Enums.CURRENCY
   startingEquity?: Prisma.IntFilter<"Account"> | number
-  targetEquity?: Prisma.IntNullableFilter<"Account"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Account"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Account"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -269,10 +249,8 @@ export type AccountOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  type?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   startingEquity?: Prisma.SortOrder
-  targetEquity?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -288,10 +266,8 @@ export type AccountWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.AccountWhereInput | Prisma.AccountWhereInput[]
   userId?: Prisma.IntFilter<"Account"> | number
   name?: Prisma.StringFilter<"Account"> | string
-  type?: Prisma.EnumACCOUNT_TYPEFilter<"Account"> | $Enums.ACCOUNT_TYPE
   currency?: Prisma.EnumCURRENCYFilter<"Account"> | $Enums.CURRENCY
   startingEquity?: Prisma.IntFilter<"Account"> | number
-  targetEquity?: Prisma.IntNullableFilter<"Account"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Account"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Account"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -303,10 +279,8 @@ export type AccountOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  type?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   startingEquity?: Prisma.SortOrder
-  targetEquity?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.AccountCountOrderByAggregateInput
@@ -323,20 +297,16 @@ export type AccountScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"Account"> | number
   userId?: Prisma.IntWithAggregatesFilter<"Account"> | number
   name?: Prisma.StringWithAggregatesFilter<"Account"> | string
-  type?: Prisma.EnumACCOUNT_TYPEWithAggregatesFilter<"Account"> | $Enums.ACCOUNT_TYPE
   currency?: Prisma.EnumCURRENCYWithAggregatesFilter<"Account"> | $Enums.CURRENCY
   startingEquity?: Prisma.IntWithAggregatesFilter<"Account"> | number
-  targetEquity?: Prisma.IntNullableWithAggregatesFilter<"Account"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Account"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Account"> | Date | string
 }
 
 export type AccountCreateInput = {
   name: string
-  type: $Enums.ACCOUNT_TYPE
   currency: $Enums.CURRENCY
   startingEquity: number
-  targetEquity?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutAccountsInput
@@ -348,10 +318,8 @@ export type AccountUncheckedCreateInput = {
   id?: number
   userId: number
   name: string
-  type: $Enums.ACCOUNT_TYPE
   currency: $Enums.CURRENCY
   startingEquity: number
-  targetEquity?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   trades?: Prisma.TradeUncheckedCreateNestedManyWithoutAccountInput
@@ -360,10 +328,8 @@ export type AccountUncheckedCreateInput = {
 
 export type AccountUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumACCOUNT_TYPEFieldUpdateOperationsInput | $Enums.ACCOUNT_TYPE
   currency?: Prisma.EnumCURRENCYFieldUpdateOperationsInput | $Enums.CURRENCY
   startingEquity?: Prisma.IntFieldUpdateOperationsInput | number
-  targetEquity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutAccountsNestedInput
@@ -375,10 +341,8 @@ export type AccountUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumACCOUNT_TYPEFieldUpdateOperationsInput | $Enums.ACCOUNT_TYPE
   currency?: Prisma.EnumCURRENCYFieldUpdateOperationsInput | $Enums.CURRENCY
   startingEquity?: Prisma.IntFieldUpdateOperationsInput | number
-  targetEquity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   trades?: Prisma.TradeUncheckedUpdateManyWithoutAccountNestedInput
@@ -389,20 +353,16 @@ export type AccountCreateManyInput = {
   id?: number
   userId: number
   name: string
-  type: $Enums.ACCOUNT_TYPE
   currency: $Enums.CURRENCY
   startingEquity: number
-  targetEquity?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type AccountUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumACCOUNT_TYPEFieldUpdateOperationsInput | $Enums.ACCOUNT_TYPE
   currency?: Prisma.EnumCURRENCYFieldUpdateOperationsInput | $Enums.CURRENCY
   startingEquity?: Prisma.IntFieldUpdateOperationsInput | number
-  targetEquity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -411,10 +371,8 @@ export type AccountUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumACCOUNT_TYPEFieldUpdateOperationsInput | $Enums.ACCOUNT_TYPE
   currency?: Prisma.EnumCURRENCYFieldUpdateOperationsInput | $Enums.CURRENCY
   startingEquity?: Prisma.IntFieldUpdateOperationsInput | number
-  targetEquity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -428,10 +386,8 @@ export type AccountCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  type?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   startingEquity?: Prisma.SortOrder
-  targetEquity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -440,17 +396,14 @@ export type AccountAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   startingEquity?: Prisma.SortOrder
-  targetEquity?: Prisma.SortOrder
 }
 
 export type AccountMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  type?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   startingEquity?: Prisma.SortOrder
-  targetEquity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -459,10 +412,8 @@ export type AccountMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  type?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   startingEquity?: Prisma.SortOrder
-  targetEquity?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -471,7 +422,6 @@ export type AccountSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   startingEquity?: Prisma.SortOrder
-  targetEquity?: Prisma.SortOrder
 }
 
 export type AccountScalarRelationFilter = {
@@ -493,24 +443,12 @@ export type StringFieldUpdateOperationsInput = {
   set?: string
 }
 
-export type EnumACCOUNT_TYPEFieldUpdateOperationsInput = {
-  set?: $Enums.ACCOUNT_TYPE
-}
-
 export type EnumCURRENCYFieldUpdateOperationsInput = {
   set?: $Enums.CURRENCY
 }
 
 export type IntFieldUpdateOperationsInput = {
   set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
   increment?: number
   decrement?: number
   multiply?: number
@@ -593,10 +531,8 @@ export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
 
 export type AccountCreateWithoutTradesInput = {
   name: string
-  type: $Enums.ACCOUNT_TYPE
   currency: $Enums.CURRENCY
   startingEquity: number
-  targetEquity?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutAccountsInput
@@ -607,10 +543,8 @@ export type AccountUncheckedCreateWithoutTradesInput = {
   id?: number
   userId: number
   name: string
-  type: $Enums.ACCOUNT_TYPE
   currency: $Enums.CURRENCY
   startingEquity: number
-  targetEquity?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutAccountInput
@@ -634,10 +568,8 @@ export type AccountUpdateToOneWithWhereWithoutTradesInput = {
 
 export type AccountUpdateWithoutTradesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumACCOUNT_TYPEFieldUpdateOperationsInput | $Enums.ACCOUNT_TYPE
   currency?: Prisma.EnumCURRENCYFieldUpdateOperationsInput | $Enums.CURRENCY
   startingEquity?: Prisma.IntFieldUpdateOperationsInput | number
-  targetEquity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutAccountsNestedInput
@@ -648,10 +580,8 @@ export type AccountUncheckedUpdateWithoutTradesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumACCOUNT_TYPEFieldUpdateOperationsInput | $Enums.ACCOUNT_TYPE
   currency?: Prisma.EnumCURRENCYFieldUpdateOperationsInput | $Enums.CURRENCY
   startingEquity?: Prisma.IntFieldUpdateOperationsInput | number
-  targetEquity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutAccountNestedInput
@@ -659,10 +589,8 @@ export type AccountUncheckedUpdateWithoutTradesInput = {
 
 export type AccountCreateWithoutTransactionsInput = {
   name: string
-  type: $Enums.ACCOUNT_TYPE
   currency: $Enums.CURRENCY
   startingEquity: number
-  targetEquity?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutAccountsInput
@@ -673,10 +601,8 @@ export type AccountUncheckedCreateWithoutTransactionsInput = {
   id?: number
   userId: number
   name: string
-  type: $Enums.ACCOUNT_TYPE
   currency: $Enums.CURRENCY
   startingEquity: number
-  targetEquity?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   trades?: Prisma.TradeUncheckedCreateNestedManyWithoutAccountInput
@@ -700,10 +626,8 @@ export type AccountUpdateToOneWithWhereWithoutTransactionsInput = {
 
 export type AccountUpdateWithoutTransactionsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumACCOUNT_TYPEFieldUpdateOperationsInput | $Enums.ACCOUNT_TYPE
   currency?: Prisma.EnumCURRENCYFieldUpdateOperationsInput | $Enums.CURRENCY
   startingEquity?: Prisma.IntFieldUpdateOperationsInput | number
-  targetEquity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutAccountsNestedInput
@@ -714,10 +638,8 @@ export type AccountUncheckedUpdateWithoutTransactionsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumACCOUNT_TYPEFieldUpdateOperationsInput | $Enums.ACCOUNT_TYPE
   currency?: Prisma.EnumCURRENCYFieldUpdateOperationsInput | $Enums.CURRENCY
   startingEquity?: Prisma.IntFieldUpdateOperationsInput | number
-  targetEquity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   trades?: Prisma.TradeUncheckedUpdateManyWithoutAccountNestedInput
@@ -725,10 +647,8 @@ export type AccountUncheckedUpdateWithoutTransactionsInput = {
 
 export type AccountCreateWithoutUserInput = {
   name: string
-  type: $Enums.ACCOUNT_TYPE
   currency: $Enums.CURRENCY
   startingEquity: number
-  targetEquity?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   trades?: Prisma.TradeCreateNestedManyWithoutAccountInput
@@ -738,10 +658,8 @@ export type AccountCreateWithoutUserInput = {
 export type AccountUncheckedCreateWithoutUserInput = {
   id?: number
   name: string
-  type: $Enums.ACCOUNT_TYPE
   currency: $Enums.CURRENCY
   startingEquity: number
-  targetEquity?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   trades?: Prisma.TradeUncheckedCreateNestedManyWithoutAccountInput
@@ -781,10 +699,8 @@ export type AccountScalarWhereInput = {
   id?: Prisma.IntFilter<"Account"> | number
   userId?: Prisma.IntFilter<"Account"> | number
   name?: Prisma.StringFilter<"Account"> | string
-  type?: Prisma.EnumACCOUNT_TYPEFilter<"Account"> | $Enums.ACCOUNT_TYPE
   currency?: Prisma.EnumCURRENCYFilter<"Account"> | $Enums.CURRENCY
   startingEquity?: Prisma.IntFilter<"Account"> | number
-  targetEquity?: Prisma.IntNullableFilter<"Account"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Account"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Account"> | Date | string
 }
@@ -792,20 +708,16 @@ export type AccountScalarWhereInput = {
 export type AccountCreateManyUserInput = {
   id?: number
   name: string
-  type: $Enums.ACCOUNT_TYPE
   currency: $Enums.CURRENCY
   startingEquity: number
-  targetEquity?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type AccountUpdateWithoutUserInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumACCOUNT_TYPEFieldUpdateOperationsInput | $Enums.ACCOUNT_TYPE
   currency?: Prisma.EnumCURRENCYFieldUpdateOperationsInput | $Enums.CURRENCY
   startingEquity?: Prisma.IntFieldUpdateOperationsInput | number
-  targetEquity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   trades?: Prisma.TradeUpdateManyWithoutAccountNestedInput
@@ -815,10 +727,8 @@ export type AccountUpdateWithoutUserInput = {
 export type AccountUncheckedUpdateWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumACCOUNT_TYPEFieldUpdateOperationsInput | $Enums.ACCOUNT_TYPE
   currency?: Prisma.EnumCURRENCYFieldUpdateOperationsInput | $Enums.CURRENCY
   startingEquity?: Prisma.IntFieldUpdateOperationsInput | number
-  targetEquity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   trades?: Prisma.TradeUncheckedUpdateManyWithoutAccountNestedInput
@@ -828,10 +738,8 @@ export type AccountUncheckedUpdateWithoutUserInput = {
 export type AccountUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumACCOUNT_TYPEFieldUpdateOperationsInput | $Enums.ACCOUNT_TYPE
   currency?: Prisma.EnumCURRENCYFieldUpdateOperationsInput | $Enums.CURRENCY
   startingEquity?: Prisma.IntFieldUpdateOperationsInput | number
-  targetEquity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -880,10 +788,8 @@ export type AccountSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   id?: boolean
   userId?: boolean
   name?: boolean
-  type?: boolean
   currency?: boolean
   startingEquity?: boolean
-  targetEquity?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -896,10 +802,8 @@ export type AccountSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   userId?: boolean
   name?: boolean
-  type?: boolean
   currency?: boolean
   startingEquity?: boolean
-  targetEquity?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -909,10 +813,8 @@ export type AccountSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   userId?: boolean
   name?: boolean
-  type?: boolean
   currency?: boolean
   startingEquity?: boolean
-  targetEquity?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -922,15 +824,13 @@ export type AccountSelectScalar = {
   id?: boolean
   userId?: boolean
   name?: boolean
-  type?: boolean
   currency?: boolean
   startingEquity?: boolean
-  targetEquity?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type AccountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "type" | "currency" | "startingEquity" | "targetEquity" | "createdAt" | "updatedAt", ExtArgs["result"]["account"]>
+export type AccountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "currency" | "startingEquity" | "createdAt" | "updatedAt", ExtArgs["result"]["account"]>
 export type AccountInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   trades?: boolean | Prisma.Account$tradesArgs<ExtArgs>
@@ -955,10 +855,8 @@ export type $AccountPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     id: number
     userId: number
     name: string
-    type: $Enums.ACCOUNT_TYPE
     currency: $Enums.CURRENCY
     startingEquity: number
-    targetEquity: number | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["account"]>
@@ -1390,10 +1288,8 @@ export interface AccountFieldRefs {
   readonly id: Prisma.FieldRef<"Account", 'Int'>
   readonly userId: Prisma.FieldRef<"Account", 'Int'>
   readonly name: Prisma.FieldRef<"Account", 'String'>
-  readonly type: Prisma.FieldRef<"Account", 'ACCOUNT_TYPE'>
   readonly currency: Prisma.FieldRef<"Account", 'CURRENCY'>
   readonly startingEquity: Prisma.FieldRef<"Account", 'Int'>
-  readonly targetEquity: Prisma.FieldRef<"Account", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Account", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Account", 'DateTime'>
 }

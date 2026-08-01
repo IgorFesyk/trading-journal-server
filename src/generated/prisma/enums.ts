@@ -9,14 +9,6 @@
 * 🟢 You can import this file directly.
 */
 
-export const ACCOUNT_TYPE = {
-  CAPITAL: 'CAPITAL',
-  PROP: 'PROP'
-} as const
-
-export type ACCOUNT_TYPE = (typeof ACCOUNT_TYPE)[keyof typeof ACCOUNT_TYPE]
-
-
 export const CURRENCY = {
   USD: 'USD',
   EUR: 'EUR',

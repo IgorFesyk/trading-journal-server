@@ -694,6 +694,14 @@ export type TradeUncheckedUpdateManyWithoutSymbolNestedInput = {
   deleteMany?: Prisma.TradeScalarWhereInput | Prisma.TradeScalarWhereInput[]
 }
 
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type EnumTRADE_STATUSFieldUpdateOperationsInput = {
   set?: $Enums.TRADE_STATUS
 }

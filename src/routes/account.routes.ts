@@ -2,7 +2,7 @@ import { Router } from 'express';
 import z from 'zod';
 
 import { accountController } from '../controllers/account.controller';
-import { ACCOUNT_TYPE, CURRENCY } from '../generated/prisma/enums';
+import { CURRENCY } from '../generated/prisma/enums';
 import { authMiddleware } from '../middlewares/auth.middleware';
 import { validateMiddleware } from '../middlewares/validate.middleware';
 import tradeRoutes from './trade.routes';
@@ -10,10 +10,8 @@ import transactionRoutes from './transaction.routes';
 
 const createAccountSchema = z.object({
     name: z.string('Name must be a string').nonempty('Name is required').max(50, 'Name must be at most 50 characters'),
-    type: z.enum(ACCOUNT_TYPE),
     currency: z.enum(CURRENCY),
     startingEquity: z.coerce.number().int().positive(),
-    targetEquity: z.coerce.number().int().positive().optional(),
 });
 
 const updateAccountSchema = createAccountSchema.partial();

@@ -971,10 +971,8 @@ export const AccountScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   name: 'name',
-  type: 'type',
   currency: 'currency',
   startingEquity: 'startingEquity',
-  targetEquity: 'targetEquity',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1116,20 +1114,6 @@ export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 
  * Reference to a field of type 'String[]'
  */
 export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
-    
-
-
-/**
- * Reference to a field of type 'ACCOUNT_TYPE'
- */
-export type EnumACCOUNT_TYPEFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ACCOUNT_TYPE'>
-    
-
-
-/**
- * Reference to a field of type 'ACCOUNT_TYPE[]'
- */
-export type ListEnumACCOUNT_TYPEFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ACCOUNT_TYPE[]'>
     
 
 

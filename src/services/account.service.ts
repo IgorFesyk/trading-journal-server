@@ -1,14 +1,12 @@
 import { Prisma } from '../generated/prisma/client';
-import { ACCOUNT_TYPE, CURRENCY } from '../generated/prisma/enums';
+import { CURRENCY } from '../generated/prisma/enums';
 import { prisma } from '../infra/prisma';
 
 type CreateAccountInput = {
     userId: number;
     name: string;
-    type: ACCOUNT_TYPE;
     currency: CURRENCY;
     startingEquity: number;
-    targetEquity?: number;
 };
 
 type UpdateAccountInput = Partial<Omit<CreateAccountInput, 'userId'>>;
